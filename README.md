@@ -10,3 +10,8 @@
     VECreativity  
 * WRITER SAID IN HEART  
     This repository is my FIRST result.I am so exciting , because I would improve mine ability.
++ HOW USE ?  
+  * Download  
+    Touch "Tag" bottom , and touch "Blue URL".  
+  * Start  
+    Open "source.exe" , you may start.  

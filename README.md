@@ -1,8 +1,9 @@
 # Black-Road-CODE-SOURCE
 + INFORMATION
   * Create Time  
-    5/27/2020   
-  This repository is my FIRST result.I am so exciting , because I would improve mine ability.
+    5/27/2020  
+  * Description
+    This repository is my FIRST result.I am so exciting , because I would improve mine ability.
 + STEP  
   1. Download  
     Touch "Tag" bottom , and choose "Blue URL" . You may be download link.  

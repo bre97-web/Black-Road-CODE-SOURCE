@@ -39,15 +39,22 @@ s:;
   char gameSetting[32] = "-gameSetting";
   char strTemp[32];
 
-  gameCenterGra();
+  system("cls");
+  if (gameProceedIf() == 1) {
+    _Cut_puts_(gameProceed, 25, 25, 0, "");
+  }
+  _Cut_puts_(gamePassage, 25, 25, 0, "");
+  _Cut_puts_(gameStart, 25, 25, 0, "");
+  _Cut_puts_(gameHelp, 25, 25, 0, "");
+  _Cut_puts_(gameWriter, 25, 25, 0, "");
+  _Cut_puts_(gameSetting, 25, 25, 0, "");
 
   gets_s(strTemp, 32);
 
   plotInitial(0, 0, 0, 0);
-  _logEvent_("function.getMenu() : user put strTemp");
 
   //  game menu
-  if (strcmp(strTemp, gamePassage) == 0) {
+  if(strcmp(strTemp, gamePassage) == 0) {
     getPassageMenu();
   }
   //  in gameCore.c File
@@ -69,23 +76,22 @@ s:;
   }
 }
 
+
+
+
+
 void getPassageMenu(void) {
-  char EP0_01[32] = "PLAYER_PASSAGE_ONE";
-  char EP0_02[32] = "PLAYER_PASSAGE_TWO";
+  char EP0_01[32] = "PLAYER_PASSAGE_ONE\n";
+  char EP0_02[32] = "PLAYER_PASSAGE_TWO\n";
   char strTemp[32];
 
   system("cls");
 
   _Repeatedly_puts_(0, 1, "GIVE_PLAYER_PASSAGE: DISPLAY\n",
-                    "No.1:Friend[EP0_01]",
-                    "----------PLAYER_PASSAGE_ONE\n");
-  _Repeatedly_puts_(0, 1, "No.2:[EP0_02]",
-                    "----------PLAYER_PASSAGE_TWO\n",
-                    "No.3:");
+                    EP0_01,
+                    EP0_02);
 
   gets_s(strTemp, 32);
-
-  _logEvent_("function.getPassageMenu() : user put strTemp");
 
   if (strcmp(strTemp, EP0_01) == 0) {
     EP0_friend011();

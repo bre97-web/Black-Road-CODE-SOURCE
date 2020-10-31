@@ -285,12 +285,8 @@ void dataFile(char data[]) {
   _logEvent_("function.dataFile() : write file");
 }
 
-/*
- *  Function : plotInitial()
- *  Effect : Control center , control Struct "plot." -= and entering function
- *  Update : FALSE
- */
-void plotInitial(int sure, int addNumOne, int addNumTwo, int addNumThree) {
+//  Ending !!!
+void plotInitial(int addNumOne, int addNumTwo, int addNumThree) {
   //  Read local "dataPlot" file
   plotFileAnalysis();
 
@@ -300,18 +296,9 @@ void plotInitial(int sure, int addNumOne, int addNumTwo, int addNumThree) {
 
   //  Write local "dataPlot" file
   plotFile();
-
-  if (sure == 1) {
-    //  puts("=");
-    report();
-  }
 }
 
-/*
- *  Function : plotValueAnalysis()
- *  Effect : Judge Struct "plot.life" value , and return result
- *  Update : FALSE
- */
+//  Ending !!!
 int plotValueAnalysis(int *put) {
   //  Judge Struct "plot.life" , value range is 0~9 , return range is 1~3
   if (plot.life != 0) {
@@ -333,11 +320,7 @@ int plotValueAnalysis(int *put) {
   return 0;
 }
 
-/*
- *  Function : plotFileAnalysis()
- *  Effect : Read local "dataPlot" file , change Struct "plot." value
- *  Update : FALSE
- */
+//  Ending !!!
 void plotFileAnalysis(void) {
   //  Get value
   char dataPlot[5];
@@ -351,8 +334,6 @@ void plotFileAnalysis(void) {
     //  Judge Var "dataPlot" is false or true
     if (_ASCII_arr(dataPlot[1]) != 0 && _ASCII_arr(dataPlot[3]) != 0) {
       Sleep_puts_("local file dataPlot.txt error", 1000);
-
-      _logEvent_(dataPlot);
 
       //  This time , local "dataPlot" file is ERROR , so Struct "plot." is
       //  Default value
@@ -398,13 +379,6 @@ void plotFile(void) {
 
   fclose(userAnalysis);
 }
-
-/*
- *  Function : report()
- *  Effect : Out Struct "plot." value , it is used number quantity
- *  Update : FALSE
- */
-void report(void) {}
 
 /*
  *  Function : gameProceedIf()

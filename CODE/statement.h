@@ -29,8 +29,6 @@ void EP0_friend012(void);
 
 // conGrapgics.c
 void pulseOn(void);
-void gameCenterGra(void);
-void getHelp(void);
 void getCharacter(void);
 void roleInf(void);
 void worldTimeList(void);
@@ -39,15 +37,16 @@ void worldWar(void);
 void roleInfBattle(void); 
 void getOver(void);
 void writer(void);
-void getWriter(void);
 
 // main.c
 void getMenu(void);
 void getPassageMenu(void);
+void getHelp(void);
+void getWriter(void);
 
 // report.c
 void addUserData(void);
-void addUserCreateFile(char *userName);
+void userAddressCreate(char *userName);
 void getProceed(void);
 void dataFile(char data[]);
 void plotInitial(int sure, int addNumOne, int addNumTwo, int addNumThree);

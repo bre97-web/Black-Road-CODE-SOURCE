@@ -21,11 +21,12 @@ void _Cut_puts_ASCII_(char call[], int start, int end, char addCall[]);
 int _For_puts_(int startNum, int mode, int endObjective, int addStartNum,char call[]);
 void _logEvent_(char log[]);
 void _Square_puts_(int padding,int width,int height,char message);
+void _l_Puts_(char log[] , unsigned mode);
 //int _Function_exponent_(double a, int n, double *result);
 
 // gameCore.c
-void EP0_friend011(void);
-void EP0_friend012(void);
+void EP0_Start000(void);
+void EP0_NorthLight011(void);
 
 // conGrapgics.c
 void pulseOn(void);
@@ -45,15 +46,11 @@ void getHelp(void);
 void getWriter(void);
 
 // report.c
+void userAddressProcess(char id[]);
+void userAddressProcessDefend(char id[]);
 void addUserData(void);
-void userAddressCreate(char *userName);
 void getProceed(void);
-void dataFile(char data[]);
-void plotInitial(int sure, int addNumOne, int addNumTwo, int addNumThree);
-int plotValueAnalysis(int *put);
-void plotFileAnalysis(void);
-void plotFile(void);
-void report(void);
-int gameProceedIf(void);
+int userNameDefend(char id[]);
+int userNameSakeDefend(char id[] , char userId[])
 
 #endif

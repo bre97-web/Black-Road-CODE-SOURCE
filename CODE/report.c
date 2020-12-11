@@ -7,182 +7,170 @@
 
 #include "statement.h"
 
-//  Use UTF-8 coding.
-//  Judge-pan'duan , result-jie'guo , change-geng'gai , range-fan'wei
-
 struct Contralet {
-  char userAddress[32], localUserAddress[32], localUserAddressFolderData[32],
-      localuserAddressFolderDataAchievement[32];
+  char userAddress[32], localUserAddressFolder[32], localUserAddressData_DataFile[32],
+      localuserAddressData_AchievementFile[32],localUserAddressData_DataFile;
 };
 struct Contralet userAddress;
 
 void userAddrssProcess(char id[]) {
   //  link address to delete local file
   _Arr_add_arr("./userSave/",id,
-               userAddress.localUserAddress);
-  _Arr_add_arr(userAddress.localUserAddress, "/data",
-               userAddress.localUserAddressFolderData);
-  _Arr_add_arr(userAddress.localUserAddress, "/achievement",
-               userAddress.localuserAddressFolderDataAchievement);
+               userAddress.localUserAddressFolder);
+  _Arr_add_arr(userAddress.localUserAddressFolder, "/data",
+               userAddress.localUserAddressData_DataFile);
+  _Arr_add_arr(userAddress.localUserAddressFolder, "/achievement",
+               userAddress.localuserAddressData_AchievementFile);
 }
-void userAddressProcessCreate() {
-  _mkdir("./userSave/");
-  _mkdir(userAddress.localUserAddress);
 
-  FILE *userCreate = NULL;
-  fopen_s(&userCreate, userAddress.localUserAddressFolderData, "a+");
-  fclose(userCreate);
-  userCreate = NULL;
-  fopen_s(&userCreate, userAddress.localuserAddressFolderDataAchievement, "a+");
-  fclose(userCreate);
+/*
+ *  Sure local file/folder life.
+ *  List:
+ *    1:./userSave/
+ *    2:userSave/user.txt
+ *    3:userSave/userName/data
+ *    4:userSave/userName/achievement
+ */
+void userAddressProcessDefend(char id[]) {
+  if (_access("userSave", 0)) {
+    _mkdir("userSave"):;
+  }
+
+  _Create_file_("userSave/user.txt", "a+");
+
+  if (id[0] != '0') {
+    _mkdir(userAddress.localUserAddressFolder);
+    _Create_file_(userAddress.localUserAddressData_DataFile, "a+");
+    _Create_file_( userAddress.localuserAddressData_AchievementFile, "a+");
+  }
 }
 
 /*
  *  Function : addUserData()
- *  Effect : Use placing address of user, Founding new "addUser.userAddress" ,
- * or Delete Struct "addUser.userAddress" value Update : FALSE
+ *  Effect : Use placing address of user, Founding new "addUser.userAddress" , or Delete Struct "addUser.userAddress" value
+ *  Update : FALSE - 12-10-2020
  */
 void addUserData(void) {
-  // User Delete mode
-  delete:;
+  startPut:;
 
-  char user_8[32] = "";
-  char user_16[32] = "";
-  char user_24[32] = "";
-  char user_32[32] = "";
+  userAddressProcessDefend("0");
 
-  char userLocal[32] = "";
-  char strValue[32];
-
-  size_t stTemp = 0;
-
-  if (_access("userSave", 0)) {
-    _mkdir("userSave");
+  FILE *userAddressOpen = NULL;
+  fopen_s(&userAddressOpen, "userSave/user.txt", "r");
+  
+  size_t userLocalSize = 0;
+  char userLocal[128];
+  while(!feof(userAddressOpen)){
+    userLocal[userLocalSize] = fgetc(userAddressOpen);
+    userLocalSize ++;
   }
+  fclose(userAddressOpen);
+  
+  userLocal[userLocalSize] = '\0'; 
+  
+  size_t userNameWidth = strlen(userLocal) / 8 , stTemp = 0 , numCount = 0 , numCountAdd = 0;
+  char userName[userNameWidth][9];  
 
-  FILE *userCreatePlot = NULL;
-  fopen_s(&userCreatePlot, "userSave/user.txt", "r+");
-  if (userCreatePlot == NULL) {
-    fopen_s(&userCreatePlot, "userSave/user.txt", "w+");
-  }
-  //  Read local "user.txt" file with value to Var "userLocal"
-  fgets(userLocal, 33, userCreatePlot);
+  system("cls");
+  if(userLocalSize == 1){
+    _l_Puts_("User null",2);
+  } else {
+    _Sleep_puts(200,"User List");
+    for (stTemp = 0; stTemp < userNameWidth;stTemp++) {
+      for (numCount = 0;numCount < 8;numCount ++) {
+  	    userName[stTemp][numCount] = userLocal[numCountAdd];
+  	    numCountAdd ++;
+     	}
+  	  userName[stTemp][8] = '\0';
+  	  _l_Puts_(userName[stTemp],1);
+    }
+  }  
 
-  fclose(userCreatePlot);
+  reProcess:;
 
-  //  Cut local 32quantity "user.txt" for Var 8quantity "user_"
-  for (stTemp = 0; stTemp < 8; stTemp++) {
-    user_8[stTemp] = userLocal[stTemp];
-    user_16[stTemp] = userLocal[stTemp + 8];
-    user_24[stTemp] = userLocal[stTemp + 16];
-    user_32[stTemp] = userLocal[stTemp + 24];
-  }
-
-  puts("Choose user:");
-  printf("\nuser1:%s\nuser2:%s\nuser3:%s\nuser4:%s\n", user_8, user_16, user_24,
-         user_32);
-
-  //  Re process
-  re:;
-
-  //  User put one-name to Var "user_0"
-  scanf_s("%s", &userAddress.userAddress, 32);
-  gets_s(strValue, 32);
+  _l_Puts_("0:Delete  0~8:Use This user name" , 2);
+  _Sleep_puts(200,"Put your user name:");
+  scanf_s("%s", &userAddress.userAddress, 9);
+  getchar();
 
   //  Judge user putting value
   if (userAddress.userAddress[0] == '0') {
     //  '0' is User Delete mode
-    char userPutAddress[32];
+    rePutDeleteName:;
+    
+    _Sleep_puts(200,"Delete your user name:");
+    scanf_s("%s", &userAddress.userAddress, 9);
+    getchar();
 
-    printf("Delete user:");
-
-    rePutUserPutAddress:;
-    scanf_s("%s", &userPutAddress, 32);
-    gets_s(strValue, 32);
-
-    //  User put one-name , Judge this Var
-    if (userPutAddress[7] == 0 || userPutAddress[8] != 0) {
-      puts("8bit number");
-      goto rePutUserPutAddress;
-    }
-    int temp;
-    for (temp = 0; temp < 8; temp++) {
-      if (userPutAddress[temp] < 48 || userPutAddress[temp] > 57) {
-        puts("8bit number 0~9");
-        goto rePutUserPutAddress;
-      }
+    if (userNameDefend(userAddress.userAddress) == 0) {
+      goto rePutDeleteName;
     }
 
-    userAddrssProcess(userPutAddress);
+    userAddrssProcess(userAddress.userAddress);
 
-    //  put result
-    puts(userAddress.localUserAddress);
-    puts(userAddress.localUserAddressFolderData);
-    puts(userAddress.localuserAddressFolderDataAchievement);
-
+    _Repeatedly_puts_(100,1,userAddress.localUserAddressFolder,userAddress.localUserAddressData_DataFile,userAddress.localuserAddressData_AchievementFile);
     //  Delete local "./userSave/userName/data" file
-    remove(userAddress.localUserAddressFolderData);
+    remove(userAddress.localUserAddressData_DataFile);
     //  Delete local "./userSave/userName/dataPlot" file
-    remove(userAddress.localuserAddressFolderDataAchievement);
+    remove(userAddress.localuserAddressData_AchievementFile);
     //  Delete local "./userSave/userName"
-    _rmdir(userAddress.localUserAddress);
-
-    //  Delete local "./userSave/userAddress.txt" , after re-write this file
+    _rmdir(userAddress.localUserAddressFolder);
+    //  Delete local "./userSave/userAddress.txt" , after reProcess-write this file
     remove("userSave/user.txt");
 
-    //  Founding local "./userSave/user.txt" file
-    FILE *newUserCreatePlot = NULL;
-    fopen_s(&newUserCreatePlot, "userSave/user.txt", "a+");
-
-    //  Judge user putting value , re-write this file for value
-    if (strcmp(userPutAddress, user_8) == 0) {
-      fputs(user_16, newUserCreatePlot);
-      fputs(user_24, newUserCreatePlot);
-      fputs(user_32, newUserCreatePlot);
-    } else if (strcmp(userPutAddress, user_16) == 0) {
-      fputs(user_8, newUserCreatePlot);
-      fputs(user_24, newUserCreatePlot);
-      fputs(user_32, newUserCreatePlot);
-    } else if (strcmp(userPutAddress, user_24) == 0) {
-      fputs(user_8, newUserCreatePlot);
-      fputs(user_16, newUserCreatePlot);
-      fputs(user_32, newUserCreatePlot);
-    } else if (strcmp(userPutAddress, user_32) == 0) {
-      fputs(user_8, newUserCreatePlot);
-      fputs(user_16, newUserCreatePlot);
-      fputs(user_24, newUserCreatePlot);
-    }
-    fclose(newUserCreatePlot);
-    goto delete;
-  } else {
-    //  User put one-name , Judge this Var
-    if (userAddress.userAddress[7] == 0 || userAddress.userAddress[8] != 0) {
-      puts("8bit number");
-      goto re;
-    }
-    int temp;
-    for (temp = 0; temp < 8; temp++) {
-      if (userAddress.userAddress[temp] < 48 ||
-          userAddress.userAddress[temp] > 57) {
-        puts("8bit number 0~9");
-        goto re;
+    for (stTemp = 0;stTemp < userNameWidth;stTemp ++) {
+      if (strcmp(userAddress.userAddress,userName[stTemp]) != 0) {
+        _Create_file_puts_("userSave/user.txt", "a+", userName[stTemp]);
       }
     }
-    userAddrssProcess(userAddress.userAddress);
-  }
-
-  if (strcmp(userAddress.userAddress, user_8) == 0) {
-  } else if (strcmp(userAddress.userAddress, user_16) == 0) {
-  } else if (strcmp(userAddress.userAddress, user_24) == 0) {
-  } else if (strcmp(userAddress.userAddress, user_32) == 0) {
+    goto startPut;
   } else {
-    FILE *userCreatePlotNew = NULL;
-    fopen_s(&userCreatePlotNew, "userSave/user.txt", "a+");
-    fputs(userAddress.userAddress, userCreatePlotNew);
-    fclose(userCreatePlotNew);
-
-    userAddressProcessCreate();
+    if (userNameDefend(userAddress.userAddress) == 0){
+      goto reProcess; 
+    }
+    numCount = 0;
+    if (userNameWidth != 0) {
+      for (stTemp = 0; stTemp < userNameWidth;stTemp++) {
+        if (userNameSakeDefend(userAddress.userAddress,userName[stTemp]) == 0) {
+          goto end;
+        } else {
+          numCount = 1;
+        }
+      }
+    } else {
+      _Create_file_puts_( "userSave/user.txt", "a+",userAddress.userAddress);  
+    }
   }
+  if (numCount != 0) {
+    _Create_file_puts_( "userSave/user.txt", "a+",userAddress.userAddress);  
+  }
+  end:;
+  userAddrssProcess(userAddress.userAddress);        
+  userAddressProcessDefend(userAddress.userAddress);
+  
+  _Sleep_puts(200 , "Opened user name:");
+  _l_Puts_(userAddress.userAddress , 2);
+}
+
+int userNameDefend(char id[]) {
+  size_t stTemp = 0;
+  if (id[7] == 0 || id[8] != 0) {
+    puts("8bit number");
+    return 0;
+  }
+  for (stTemp = 0; stTemp < 8; stTemp++) {
+    if (id[stTemp] < 48 || id[stTemp] > 57) {
+      puts("8bit number 0~9");
+      return 0;
+    }
+  }
+  return 1;
+} 
+int userNameSakeDefend(char id[] , char userId[]) {
+  if (strcmp(id,userId) == 0) {
+    return 0;
+  }
+  return 1;
 }
 
 /*
@@ -191,106 +179,45 @@ void addUserData(void) {
  *  Update : TRUE
  */
 void getProceed(void) {
-  //  Get value
   char userData[4];
 
   //  Read local "data" file
   FILE *userDataRead = NULL;
-  fopen_s(&userDataRead,userAddress.localUserAddress, "r");
+  fopen_s(&userDataRead,userAddress.localUserAddressFolder, "r");
   if (userDataRead == NULL) {
-    dataFile("0011");
-
-    _logEvent_("function.getProceed() : FILE * = NULL , function.dataFile()");
+    _Create_file_puts_(userAddress.localUserAddressData_DataFile,"w+","0011");
   }
-
-  //  Get local file value to Var "userData"
   fgets(userData, 5, userDataRead);
-
   fclose(userDataRead);
 
-  // Get Var "userData[0]"
-  if (userData[0] == '0') {
-    goto ep;
-  } else {
-    //  function end
-    goto end;
-  }
+  //  EP0__xxx
+  if (userData[0] = '0') {
+    //  EP0_0xx
+    if (userData[1] = '0') {
+      //  EP0_00x
+      if (userData[2] = '0') {
+        //  EP0_000
+        if (userData[3] = '0') {
+          EP0_start000();
+        
+        }
+      //  EP0_01x
+      } else if (userData[2] = '1') {
+        //  EP0_011
+        if (userData[3] = '1') {
+          EP0_NorthLight011();
 
-ep:;
+        } 
 
-  //  EP0__0xx
-  switch (userData[1]) {
-    case '0':
-
-      switch (userData[2]) {
-        case '1':
-
-          //  EP0__01x
-          switch (userData[3]) {
-            case '1':
-              EP0_friend011();
-              break;
-            case '2':
-              EP0_friend012();
-              break;
-          }
-          break;
-
-        case '2':
-
-          //  EP0__02x
-          switch (userData[3]) {
-            case '1':
-              break;
-          }
-          break;
       }
-      break;
-
-    //  EP1__1xx
-    case '1':
-      break;
-    default:
-      break;
+    } else if (userData[1] = '1') {
+    } else if (userData[1] = '2') {
+    }
+  } else if (userData[0] = '1') {
   }
 
-end:;
+
+
+
 }
 
-/*
- *  Function : dataFile
- *  Effect : Var "data" towards local "data" file with write
- *  Update : FALSE
- */
-void dataFile(char data[]) {
-  //  Write local "data" file
-  FILE *userDataWrite = NULL;
-  fopen_s(&userDataWrite,userAddress.localUserAddressFolderData, "w");
-
-  //  Var "data" value in local "data" file
-  fprintf(userDataWrite, "%s", data);
-
-  fclose(userDataWrite);
-
-  _logEvent_("function.dataFile() : write file");
-}
-
-/*
- *  Function : report()
- *  Effect : Out Struct "plot." value , it is used number quantity
- *  Update : FALSE
- */
-void report(void) {}
-
-/*
- *  Function : gameProceedIf()
- *  Effect : Judge local "data" file , if TRUE , return of function
- * gameCenterGra() Update : FALSE
- */
-int gameProceedIf(void) {
-  if (_Read_file_(userAddress.localUserAddress) == 1) {
-    return 1;
-  } else {
-    return 0;
-  }
-}

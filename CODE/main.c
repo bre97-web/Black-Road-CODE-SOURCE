@@ -10,15 +10,14 @@
 int main(void) {
   system("mode con cols=105 lines=30 color 70");
 
-  _logEvent_(".exe start core...");
+  _logEvent_(".exe start core.",1);
 
   writer();
   pulseOn();
   addUserData();
-
   getMenu();
 
-  _logEvent_(".exe return 0...");
+  _logEvent_(".exe end core.",1);
 
   //  puts("\n By:Bre97 \n");
   return 0;
@@ -28,53 +27,49 @@ void getMenu(void) {
   re:;
 
   system("cls");
-
-  if (gameProceedIf() == 1) {
-    _Cut_puts_("-gameProceed\n", 25, 25, 0, "");
-  }
-  _Cut_puts_("-gamePassage\n", 25, 25, 0, "");
-  _Cut_puts_("-gameStart\n", 25, 25, 0, "");
-  _Cut_puts_("-gameHelp\n", 25, 25, 0, "");
-  _Cut_puts_("-gameWriter\n", 25, 25, 0, "");
-  _Cut_puts_("-gameSetting\n", 25, 25, 0, "");
-
+  _Cut_puts_("-gameProceed\n-gamePassage\n-gameStart\n-gameHelp\n-gameWriter\n-gameSetting\n-backUser\n-exit\n", 25, 25, 0, "");
+  
   char strTemp[32];
-  gets_s(strTemp, 32);
+  _l_Puts_("Which:" , 2);
+  gets(strTemp);
 
   system("cls");
 
   if (strcmp(strTemp, "-gamePassage") == 0) {
     getPassageMenu();
   } else if (strcmp(strTemp, "-gameStart") == 0) {
-    EP0_friend011();
+    EP0_Start000();
   } else if (strcmp(strTemp, "-gameHelp") == 0) {
     getHelp();
-    goto re;
   } else if (strcmp(strTemp, "-gameProceed") == 0) {
     getProceed();
   } else if (strcmp(strTemp, "-gameWriter") == 0) {
     getWriter();
-    goto re;
   } else if (strcmp(strTemp, "-gameSetting") == 0) {
     getCharacter();
-    goto re;
-  } else {
-    goto re;
+  } else if (strcmp(strTemp, "-backUser") == 0) {
+    addUserData();
+  } else if (strcmp(strTemp, "-exit") == 0) {
+    goto end;
   }
+  
+  goto re;
+  end:;
 }
 
 void getPassageMenu(void) {
   _Repeatedly_puts_(0, 1, "GIVE_PLAYER_PASSAGE: DISPLAY\n",
-                    "No.1:Friend[EP0_01]", "----------PLAYER_PASSAGE_ONE\n");
-  _Repeatedly_puts_(0, 1, "No.2:[EP0_02]", "----------PLAYER_PASSAGE_TWO\n",
+                    "No.1:Start[EP0_000]", "----------PLAYER_PASSAGE_ZERO\n");
+  _Repeatedly_puts_(0, 1, "No.2:NorthLight[EP0_011]", "----------PLAYER_PASSAGE_ONE\n",
                     "No.3:");
 
   char strTemp[32];
   gets_s(strTemp, 32);
 
-  if (strcmp(strTemp, "PLAYER_PASSAGE_ONE") == 0) {
-    EP0_friend011();
-  } else if (strcmp(strTemp, "PLAYER_PASSAGE_TWO") == 0) {
+  if (strcmp(strTemp, "PLAYER_PASSAGE_ZERO") == 0) {
+    EP0_Start000();
+  } else if (strcmp(strTemp, "PLAYER_PASSAGE_ONE") == 0) {
+    EP0_NorthLight();
   }
 }
 

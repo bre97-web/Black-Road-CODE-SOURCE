@@ -182,11 +182,11 @@ void _Create_file_(char fileName[], char mode[]) {
 void _Create_file_puts_(char fileName[], char mode[], char message[]) {
   FILE *fileAddress = NULL;
   fopen_s(&fileAddress, fileName, mode);
-  fputs(message, fileAddress);
+  fprintf(fileAddress , "%s" , message);
   fclose(fileAddress);
 }
 // _Read_file_() = fopen_s("","r") + return 1/-1
-int _Read_file_(char fileName[]) {
+int _Read_file_live_(char fileName[]) {
   FILE *fileAddress = NULL;
   fopen_s(&fileAddress, fileName, "r");
   if (fileAddress == NULL) {
@@ -197,10 +197,33 @@ int _Read_file_(char fileName[]) {
   }
 }
 // _logEvent_ write Local log
-void _logEvent_(char log[]) {
+void _logEvent_(char log[] , unsigned mode) {
   FILE *logWrite = NULL;
   fopen_s(&logWrite, "./log", "a+");
-  fprintf(logWrite, "%s\n", log);
+  
+  size_t stTemp = 0 , count = 0 , logWidth = strlen(log);
+  
+  if (mode == 1) {
+   fprintf(logWrite, "\n-----------------------------------------------\n\x20\x20");
+  } else if (mode == 2) {
+   fprintf(logWrite, "\n===============================================\n\x20\x20");
+  }
+  
+  for (stTemp = 0;stTemp < logWidth;stTemp ++) {
+    fprintf(logWrite, "%c" , log[stTemp]);
+    count ++;
+    if (count == 43) {
+      fprintf(logWrite , "\n\x20\x20");
+      count = 0;
+    }
+  }
+  
+  if (mode == 1) {
+   fprintf(logWrite, "\n-----------------------------------------------\n");
+  } else if (mode == 2) {
+   fprintf(logWrite, "\n===============================================\n");
+  }
+  
   fclose(logWrite);
 }
 
@@ -263,6 +286,31 @@ void _Triangle_puts_(int height){
     goto s;
   }
   
+}
+
+void _l_Puts_(char log[] , unsigned mode) {
+  size_t stTemp = 0 , count = 0 , logWidth = strlen(log);
+  
+  if (mode == 1) {
+   printf("\n-----------------------------------------------\n\x20\x20");
+  } else if (mode == 2) {
+   printf("\n===============================================\n\x20\x20");
+  }
+  
+  for (stTemp = 0;stTemp < logWidth;stTemp ++) {
+    printf("%c" , log[stTemp]);
+    count ++;
+    if (count == 43) {
+      printf("\n\x20\x20");
+      count = 0;
+    }
+  }
+  
+  if (mode == 1) {
+   printf("\n-----------------------------------------------\n");
+  } else if (mode == 2) {
+   printf("\n===============================================\n");
+  }
 }
 
 #endif

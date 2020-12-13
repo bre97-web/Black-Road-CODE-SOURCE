@@ -9,7 +9,7 @@
 
 struct Contralet {
   char userAddress[32], localUserAddressFolder[32], localUserAddressData_DataFile[32],
-      localuserAddressData_AchievementFile[32],localUserAddressData_DataFile;
+      localuserAddressData_AchievementFile[32];
 };
 struct Contralet userAddress;
 
@@ -33,7 +33,7 @@ void userAddrssProcess(char id[]) {
  */
 void userAddressProcessDefend(char id[]) {
   if (_access("userSave", 0)) {
-    _mkdir("userSave"):;
+    _mkdir("userSave");
   }
 
   _Create_file_("userSave/user.txt", "a+");
@@ -42,6 +42,11 @@ void userAddressProcessDefend(char id[]) {
     _mkdir(userAddress.localUserAddressFolder);
     _Create_file_(userAddress.localUserAddressData_DataFile, "a+");
     _Create_file_( userAddress.localuserAddressData_AchievementFile, "a+");
+
+    _logEvent_(userAddress.userAddress, 2);
+    _logEvent_(userAddress.localUserAddressFolder, 2);
+    _logEvent_(userAddress.localUserAddressData_DataFile, 2);
+    _logEvent_(userAddress.localuserAddressData_AchievementFile, 2);
   }
 }
 
@@ -61,7 +66,7 @@ void addUserData(void) {
   size_t userLocalSize = 0;
   char userLocal[128];
   while(!feof(userAddressOpen)){
-    userLocal[userLocalSize] = fgetc(userAddressOpen);
+    userLocal[userLocalSize] = (char)fgetc(userAddressOpen);
     userLocalSize ++;
   }
   fclose(userAddressOpen);
@@ -69,7 +74,7 @@ void addUserData(void) {
   userLocal[userLocalSize] = '\0'; 
   
   size_t userNameWidth = strlen(userLocal) / 8 , stTemp = 0 , numCount = 0 , numCountAdd = 0;
-  char userName[userNameWidth][9];  
+  char userName[1][9];  
 
   system("cls");
   if(userLocalSize == 1){
@@ -183,37 +188,37 @@ void getProceed(void) {
 
   //  Read local "data" file
   FILE *userDataRead = NULL;
-  fopen_s(&userDataRead,userAddress.localUserAddressFolder, "r");
-  if (userDataRead == NULL) {
+  fopen_s(&userDataRead, userAddress.localUserAddressData_DataFile, "r");
+  if (userDataRead == NULL || feof(userDataRead)) {
     _Create_file_puts_(userAddress.localUserAddressData_DataFile,"w+","0011");
   }
   fgets(userData, 5, userDataRead);
   fclose(userDataRead);
 
   //  EP0__xxx
-  if (userData[0] = '0') {
+  if (userData[0] == '0') {
     //  EP0_0xx
-    if (userData[1] = '0') {
+    if (userData[1] == '0') {
       //  EP0_00x
-      if (userData[2] = '0') {
+      if (userData[2] == '0') {
         //  EP0_000
-        if (userData[3] = '0') {
-          EP0_start000();
+        if (userData[3] == '0') {
+          EP0_Start000();
         
         }
       //  EP0_01x
-      } else if (userData[2] = '1') {
+      } else if (userData[2] == '1') {
         //  EP0_011
-        if (userData[3] = '1') {
+        if (userData[3] == '1') {
           EP0_NorthLight011();
 
         } 
 
       }
-    } else if (userData[1] = '1') {
-    } else if (userData[1] = '2') {
+    } else if (userData[1] == '1') {
+    } else if (userData[1] == '2') {
     }
-  } else if (userData[0] = '1') {
+  } else if (userData[0] == '1') {
   }
 
 

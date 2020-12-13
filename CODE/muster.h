@@ -197,7 +197,7 @@ int _Read_file_live_(char fileName[]) {
   }
 }
 // _logEvent_ write Local log
-void _logEvent_(char log[] , unsigned mode) {
+void _logEvent_(char log[] , unsigned int mode) {
   FILE *logWrite = NULL;
   fopen_s(&logWrite, "./log", "a+");
   

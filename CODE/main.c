@@ -4,8 +4,7 @@
 #include "muster.h"
 #include "statement.h"
 
-//  Use Google-Code-Style
-//  Use UTF-8 coding.
+// 12/12/2020
 
 int main(void) {
   system("mode con cols=105 lines=30 color 70");
@@ -29,9 +28,9 @@ void getMenu(void) {
   system("cls");
   _Cut_puts_("-gameProceed\n-gamePassage\n-gameStart\n-gameHelp\n-gameWriter\n-gameSetting\n-backUser\n-exit\n", 25, 25, 0, "");
   
-  char strTemp[32];
+  char strTemp[16];
   _l_Puts_("Which:" , 2);
-  gets(strTemp);
+  gets_s(strTemp, 16);
 
   system("cls");
 
@@ -46,7 +45,7 @@ void getMenu(void) {
   } else if (strcmp(strTemp, "-gameWriter") == 0) {
     getWriter();
   } else if (strcmp(strTemp, "-gameSetting") == 0) {
-    getCharacter();
+    
   } else if (strcmp(strTemp, "-backUser") == 0) {
     addUserData();
   } else if (strcmp(strTemp, "-exit") == 0) {
@@ -69,7 +68,7 @@ void getPassageMenu(void) {
   if (strcmp(strTemp, "PLAYER_PASSAGE_ZERO") == 0) {
     EP0_Start000();
   } else if (strcmp(strTemp, "PLAYER_PASSAGE_ONE") == 0) {
-    EP0_NorthLight();
+    EP0_NorthLight011();
   }
 }
 

@@ -8,8 +8,8 @@
     Open "SourcePackage.rar" (IF LIFE) , you should Release all files.  
   3. Start  
     Start up "source.exe" , you may look one "cmd" window.     
-+ NEW  
-name | age
----- | ---
-LearnShare | 12
-Mike |  32   
+NEW  
+| left | center | right |  
+| :--- | :----: | ----: |  
+| aaaa | bbbbbb | ccccc |  
+| a    | b      | c     |

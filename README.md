@@ -8,8 +8,6 @@
     Open "SourcePackage.rar" (IF LIFE) , you should Release all files.  
   3. Start  
     Start up "source.exe" , you may look one "cmd" window.     
-NEW  
-| left | center | right |  
-| :--- | :----: | ----: |  
-| aaaa | bbbbbb | ccccc |  
-| a    | b      | c     |
++ NEW  
+| C -> C# Building | Update Times |
+|        0 %       |  12-21-2020  |

@@ -1,6 +1,6 @@
-# Shadow Of World  
+# Shadow Of World C  
 + #Update Log.#  
-  The new C#project is already online ： 12/21/2020  
+  The new C# Project is already online ： 12/21/2020  
 + STEP  
   1. Download  
     Touch "Tag" bottom , and choose "Blue URL" . You may be download link.  

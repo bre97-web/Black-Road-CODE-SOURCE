@@ -9,5 +9,5 @@
   3. Start  
     Start up "source.exe" , you may look one "cmd" window.     
 + NEW
-  |C -> C# Builing|
-  |   0 %   |
+  |:C -> C# Builing:|
+  |:0 %:|

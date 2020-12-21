@@ -9,7 +9,7 @@
   3. Start  
     Start up "source.exe" , you may look one "cmd" window.     
 + NEW  
-  |  表头   | 表头  |  
-|  ----  | ----  |  
-| 单元格  | 单元格 |  
-| 单元格  | 单元格 |   
+name | age
+---- | ---
+LearnShare | 12
+Mike |  32   

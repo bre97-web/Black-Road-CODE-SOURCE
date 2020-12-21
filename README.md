@@ -9,5 +9,7 @@
   3. Start  
     Start up "source.exe" , you may look one "cmd" window.     
 + NEW  
-  |:C -> C# Builing:|  
-  |:0 %:|  
+  |  表头   | 表头  |
+|  ----  | ----  |
+| 单元格  | 单元格 |
+| 单元格  | 单元格 | 

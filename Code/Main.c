@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "MUSTER.h"
+#include "Other.Platform.vec.NonGraphic.h"
 #include "DECLARATION.h"
 
 // 12/12/2020
@@ -9,15 +9,15 @@
 int main(void) {
 
   system("color F0");
-  _logEvent_(".exe start core.",1);
+  _IO_File_Log(".exe start core.",1);
 
   writer();
   pulseOn();
-  _Loading_();
+  _Console_Write_LoadingAnimationSec();
   userLogin();
   getMenu();
 
-  _logEvent_(".exe end core.",1);
+  _IO_File_Log(".exe end core.",1);
 
   //  puts("\n By:Bre97 \n");
   return 0;
@@ -27,10 +27,10 @@ void getMenu(void) {
   re:;
 
   system("cls");
-  _Cut_puts_("-gameProceed\n-gamePassage\n-gameStart\n-gameHelp\n-gameWriter\n-gameSetting\n-backUser\n-exit\n", 25, 25, 0, "");
+  _Console_Write_CutToEnd("-gameProceed\n-gamePassage\n-gameStart\n-gameHelp\n-gameWriter\n-gameSetting\n-backUser\n-exit\n", 25, 25, 0);
   
   char strTemp[16];
-  _l_Puts_("Which:" , 2);
+  _Console_Write_Frame("Which:" , 2);
   gets_s(strTemp, 16);
 
   system("cls");
@@ -43,8 +43,6 @@ void getMenu(void) {
     getHelp();
   } else if (strcmp(strTemp, "-gameProceed") == 0) {
     getProceed();
-  } else if (strcmp(strTemp, "-gameWriter") == 0) {
-    getWriter();
   } else if (strcmp(strTemp, "-gameSetting") == 0) {
     
   } else if (strcmp(strTemp, "-backUser") == 0) {
@@ -58,10 +56,11 @@ void getMenu(void) {
 }
 
 void getPassageMenu(void) {
-  _Console_Write_Repeatedly(0,"GIVE_PLAYER_PASSAGE: DISPLAY\n",
-                      "No.1:Start[EP0_000]", "----------PLAYER_PASSAGE_ZERO\n");
-  _Console_Write_Repeatedly(0,"No.2:NorthLight[EP0_011]", "----------PLAYER_PASSAGE_ONE\n",
-                      "No.3:");
+  _Console_Write_CutToEnd("GIVE_PLAYER_PASSAGE: DISPLAY\n"
+                          "No.1:Start[EP0_000]----------PLAYER_PASSAGE_ZERO\n"
+                          "No.2:NorthLight[EP0_011]----------PLAYER_PASSAGE_ONE\n"
+                          "No.3:",
+                          25,25,0);
 
   char strTemp[32];
   gets_s(strTemp, 32);
@@ -74,25 +73,11 @@ void getPassageMenu(void) {
 }
 
 void getHelp(void) {
-  _Cut_puts_("None", 25, 25, 0, "");
+  _Console_Write_CutToEnd("None", 25, 25, 0);
 
   system("pause");
 
-  char strValue[32];
-  gets_s(strValue, 32);
-}
-
-void getWriter(void) {
-  _Cut_puts_("Drama : Bre 97\nAuthor : Bre 97\nCompose : Bre 97\nCode : Bre 97", 50,
-            50, 1,"\n\n\n\n\n\n\n\n\n\n\n"
-            "\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20"
-            "\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20");
-  _Cut_puts_ASCII_(
-      "Thank you to play this game.", 100, 100,
-      "\n\n\n\n\n\n\n\n\n\n\n"
-      "\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20"
-      "\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20");
-  system("cls");
+  getchar();
 }
 
 

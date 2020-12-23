@@ -37,7 +37,7 @@ void pulseOn(void) {
                               "                               |          *****           ****************     *******   |\n");
   _Console_Write_Repeatedly(0,"                               -----------------------------------------------------------\n",0,0);
   Sleep(2000);
-  _Console_Write_Repeatedly(0,"                                       Born in 2020, it has no commercial character",0,0);
+  _Console_Write_Repeatedly(0,"                                    Born in 2020, it has no commercial character\n\n",0,0);
   Sleep(3000);
 }
 
@@ -47,7 +47,7 @@ void writer(void) {
 
   system("cls");
 
-  _Cut_puts_(by, 50, 50, 0, "                                        ");
+  _Console_Write_CutToEnd(by, 50, 50, 0);
 }
 
 

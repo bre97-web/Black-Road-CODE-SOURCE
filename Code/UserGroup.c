@@ -24,29 +24,26 @@ struct Contralet userAddress;
  */
 void userAddrssProcess(char id[]) {
   //  link address to delete local file
-  _Arr_add_arr("./userSave/",id,
+  _Data_Convert_ArrayLinkBoth("./userSave/",id,
                userAddress.localUserAddressFolder);
-  _Arr_add_arr(userAddress.localUserAddressFolder, "/data",
+  _Data_Convert_ArrayLinkBoth(userAddress.localUserAddressFolder, "/data",
                userAddress.localUserAddressData_DataFile);
-  _Arr_add_arr(userAddress.localUserAddressFolder, "/achievement",
+  _Data_Convert_ArrayLinkBoth(userAddress.localUserAddressFolder, "/achievement",
                userAddress.localuserAddressData_AchievementFile);
 }
 void userAddressProcessDefend(char id[]) {
-  if (_access("userSave", 0)) {
-    _mkdir("userSave");
-  }
-
-  _Create_file_("userSave/user.txt", "a+");
+  _IO_Folder_Create("userSave");
+  _IO_File_Create("userSave/user.txt", "a+");
 
   if (id[0] != '0') {
     _mkdir(userAddress.localUserAddressFolder);
-    _Create_file_(userAddress.localUserAddressData_DataFile, "a+");
-    _Create_file_( userAddress.localuserAddressData_AchievementFile, "a+");
+    _IO_File_Create(userAddress.localUserAddressData_DataFile, "a+");
+    _IO_File_Create( userAddress.localuserAddressData_AchievementFile, "a+");
 
-    _logEvent_(userAddress.userAddress, 2);
-    _logEvent_(userAddress.localUserAddressFolder, 2);
-    _logEvent_(userAddress.localUserAddressData_DataFile, 2);
-    _logEvent_(userAddress.localuserAddressData_AchievementFile, 2);
+    _IO_File_Log(userAddress.userAddress, 2);
+    _IO_File_Log(userAddress.localUserAddressFolder, 2);
+    _IO_File_Log(userAddress.localUserAddressData_DataFile, 2);
+    _IO_File_Log(userAddress.localuserAddressData_AchievementFile, 2);
   }
 }
 
@@ -78,7 +75,7 @@ void userLogin(void) {
 
   system("cls");
   if(userLocalSize == 1){
-    _l_Puts_("User null",2);
+    _Console_Write_Frame("User null",2);
   } else {
     _Console_Write_WriteSleep(200,"User List");
     for (stTemp = 0; stTemp < userNameWidth;stTemp++) {
@@ -87,13 +84,13 @@ void userLogin(void) {
   	    numCountAdd ++;
      	}
   	  userName[stTemp][8] = '\0';
-  	  _l_Puts_(userName[stTemp],1);
+      _Console_Write_Frame(userName[stTemp],1);
     }
   }  
 
   reProcess:;
 
-  _l_Puts_("0:Delete  0~8:Use This user name" , 2);
+  _Console_Write_Frame("0:Delete  0~8:Use This user name" , 2);
   _Console_Write_WriteSleep(200,"Put your user name:");
   scanf_s("%s", &userAddress.userAddress, 9);
   getchar();
@@ -125,7 +122,7 @@ void userLogin(void) {
 
     for (stTemp = 0;stTemp < userNameWidth;stTemp ++) {
       if (strcmp(userAddress.userAddress,userName[stTemp]) != 0) {
-        _Create_file_puts_("userSave/user.txt", "a+", userName[stTemp]);
+        _IO_File_Write("userSave/user.txt", "a+", userName[stTemp]);
       }
     }
     goto startPut;
@@ -143,18 +140,18 @@ void userLogin(void) {
         }
       }
     } else {
-      _Create_file_puts_( "userSave/user.txt", "a+",userAddress.userAddress);  
+      _IO_File_Write( "userSave/user.txt", "a+",userAddress.userAddress);
     }
   }
   if (numCount != 0) {
-    _Create_file_puts_( "userSave/user.txt", "a+",userAddress.userAddress);  
+    _IO_File_Write( "userSave/user.txt", "a+",userAddress.userAddress);
   }
   end:;
   userAddrssProcess(userAddress.userAddress);        
   userAddressProcessDefend(userAddress.userAddress);
   
   _Console_Write_WriteSleep(200 , "Opened user name:");
-  _l_Puts_(userAddress.userAddress , 2);
+  _Console_Write_Frame(userAddress.userAddress , 2);
 }
 
 /*
@@ -183,7 +180,7 @@ int userNameSakeDefend(char id[] , char userId[]) {
 
 //  Write local "data".
 void sendValueToDataFile(char message[]) {
-  _Create_file_puts_(userAddress.localUserAddressData_DataFile, "w+", message);
+  _IO_File_Write(userAddress.localUserAddressData_DataFile, "w+", message);
 }
 
 /*
@@ -198,7 +195,7 @@ void getProceed(void) {
   FILE *userDataRead = NULL;
   fopen_s(&userDataRead, userAddress.localUserAddressData_DataFile, "r");
   if (userDataRead == NULL || feof(userDataRead)) {
-    _Create_file_puts_(userAddress.localUserAddressData_DataFile,"w+","0011");
+    _IO_File_Write(userAddress.localUserAddressData_DataFile,"w+","0011");
   }
   fgets(userData, 5, userDataRead);
   fclose(userDataRead);

@@ -1,6 +1,4 @@
-#include <windows.h>
-
-#include "DECLARATION.h"
+#include "Declaration.h"
 
 //  Use GBK coding
 // EP0_01-----

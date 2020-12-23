@@ -1,11 +1,7 @@
 #include <direct.h>
-#include <io.h>
-#include <process.h>
 #include <stdio.h>
-#include <string.h>
-#include <windows.h>
 
-#include "DECLARATION.h"
+#include "Declaration.h"
 
 struct Contralet {
   char userAddress[32], localUserAddressFolder[32], localUserAddressData_DataFile[32],
@@ -73,7 +69,6 @@ void userLogin(void) {
   size_t userNameWidth = strlen(userLocal) / 8 , stTemp = 0 , numCount = 0 , numCountAdd = 0;
   char userName[1][9];  
 
-  system("cls");
   if(userLocalSize == 1){
     _Console_Write_Frame("User null",2);
   } else {

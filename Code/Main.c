@@ -1,8 +1,5 @@
-#include <stdlib.h>
-#include <string.h>
-
 #include "Other.Platform.vec.NonGraphic.h"
-#include "DECLARATION.h"
+#include "Declaration.h"
 
 // 12/12/2020
 
@@ -59,8 +56,8 @@ void getPassageMenu(void) {
   _Console_Write_CutToEnd("GIVE_PLAYER_PASSAGE: DISPLAY\n"
                           "No.1:Start[EP0_000]----------PLAYER_PASSAGE_ZERO\n"
                           "No.2:NorthLight[EP0_011]----------PLAYER_PASSAGE_ONE\n"
-                          "No.3:",
-                          25,25,0);
+                          "No.3:"
+                          ,25,25,0);
 
   char strTemp[32];
   gets_s(strTemp, 32);
@@ -73,9 +70,10 @@ void getPassageMenu(void) {
 }
 
 void getHelp(void) {
-  _Console_Write_CutToEnd("None", 25, 25, 0);
-
-  system("pause");
+  _Console_Write_CutToEnd("In the v0.1 alpha.2 version.\n"
+                          "a lot of user operations have been reduced. Now you can enter 1 to indicate the first item.\n"
+                          "Plan to expand and support the expansion in the future.\n"
+                          , 25, 25, 0);
 
   getchar();
 }

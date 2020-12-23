@@ -2,9 +2,7 @@
 
 #include <direct.h>
 #include <io.h>
-#include <process.h>
 #include <stdio.h>
-#include <string.h>
 #include <windows.h>
 
 #ifndef muster_H_INCLUDED
@@ -114,6 +112,7 @@ void _Console_Write_LoadingAnimationSec(void) {
     printf("=");
   }
   system("color f0");
+  system("cls");
 }
                    
 int _Data_Convert_AsciiToNum(int ascii) {

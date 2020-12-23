@@ -7,7 +7,7 @@
   2. Install   
     Open "SourcePackage.rar" (IF LIFE) , you should Release all files.  
   3. Start  
-    Start up "source.exe" , you may look one "cmd" window.     
+    Start up "ShadowOfWorld-Console.exe" , you may look one "cmd" window.     
 + NEW  
 | C -> C# Building | Update Times |  
 |        0 %       |  12-21-2020  |  

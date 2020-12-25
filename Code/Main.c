@@ -25,7 +25,7 @@ void getMenu(void) {
 
   system("cls");
   _Console_Write_CutToEnd("-gameProceed\n-gamePassage\n-gameStart\n-gameHelp\n-gameWriter\n-gameSetting\n-backUser\n-exit\n", 25, 25, 0);
-  
+
   char strTemp[16];
   _Console_Write_Frame("Which:" , 2);
   gets_s(strTemp, 16);
@@ -74,8 +74,6 @@ void getHelp(void) {
                           "a lot of user operations have been reduced. Now you can enter 1 to indicate the first item.\n"
                           "Plan to expand and support the expansion in the future.\n"
                           , 25, 25, 0);
-
-  getchar();
 }
 
 

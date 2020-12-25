@@ -138,12 +138,18 @@ char *_Data_Convert_ArrayLinkBoth(char object[], char message[], char result[]) 
 int _IO_File_Create(char fileNameAddress[], char mode[]) {
   FILE *fileAddress = NULL;
   fopen_s(&fileAddress, fileNameAddress, mode);
+  if (fileAddress == NULL) {
+    return -1;
+  }
   fclose(fileAddress);
   return 1;
 }
 int _IO_File_Write(char fileNameAddress[], char mode[], char message[]) {
   FILE *fileAddress = NULL;
   fopen_s(&fileAddress, fileNameAddress, mode);
+  if (fileAddress == NULL) {
+    return -1;
+  }
   fprintf(fileAddress , "%s" , message);
   fclose(fileAddress);
   return 1;
@@ -161,6 +167,9 @@ int _IO_File_Read_State(char fileNameAddress[]) {
 int _IO_File_Log(char log[] , unsigned int mode) {
   FILE *logWrite = NULL;
   fopen_s(&logWrite, "./log", "a+");
+  if (logWrite == NULL) {
+    return -1;
+  }
   size_t stTemp = 0 , count = 0 , logWidth = strlen(log);
   
   if (mode == 1) {
@@ -186,8 +195,8 @@ int _IO_File_Log(char log[] , unsigned int mode) {
 }
 int _IO_Folder_Create(char fileNameAddress[]) {
   if (_access(fileNameAddress, 0)) {
-    _mkdir(fileNameAddress);
-    return 1;
+    
+    return _mkdir(fileNameAddress);;
   }
   return -1;
 }

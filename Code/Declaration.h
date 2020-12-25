@@ -17,7 +17,7 @@ char *_Data_Convert_ArrayLinkBoth(char object[], char message[], char result[]);
 
 int _IO_File_Create(char fileNameAddress[], char mode[]);
 int _IO_File_Write(char fileNameAddress[], char mode[], char message[]);
-int _IO_File_Read(char fileNameAddress[]);
+int _IO_File_Read_State(char fileNameAddress[]);
 int _IO_File_Log(char log[], unsigned int mode);
 int _IO_Folder_Create(char folderNameAddress[]);
 
@@ -36,12 +36,12 @@ void getHelp(void);
 
 // UserGroup.c
 void userAddrssProcess(char id[]);
-void userAddressProcessDefend(char id[]);
-void userLogin(void);
+int userAddressProcessDefend(char id[]);
+int userLogin(void);
 int userNameDefend(char id[]);
 int userNameSakeDefend(char id[], char userId[]);
 void sendValueToDataFile(char message[]);
-void getProceed(void);
+int getProceed(void);
 
 
 

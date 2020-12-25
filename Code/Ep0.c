@@ -1,7 +1,5 @@
 #include "Declaration.h"
 
-//  Use GBK coding
-// EP0_01-----
 void EP0_Start000(void) {
   
 

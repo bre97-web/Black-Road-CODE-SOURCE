@@ -27,11 +27,10 @@ void EP0_NorthLight011(void);
 
 // TextInformation.c
 void pulseOn(void);
-void writer(void);
 
 // Main.c
-void getMenu(void);
-void getPassageMenu(void);
+int getMenu(void);
+void getGamePassage(void);
 void getHelp(void);
 
 // UserGroup.c

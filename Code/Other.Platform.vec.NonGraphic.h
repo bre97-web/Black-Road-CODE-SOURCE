@@ -277,6 +277,5 @@ void _Triangle_puts_(int height){
  *      You can give me with "Error Report",I will look Carefully.
  *      You can Upgrade the "this.h" File,but you should have told me.
  *  About :
- *    Last Update date : 12-23-2020
-
+ *    Last Update date : 12-25-2020
  */

@@ -17,8 +17,6 @@ void pulseOn(void) {
                               "                               |           ***            *************      *******     |\n");
   _Console_Write_Repeatedly(0,"                               ------------------------------------------------------------\n",0,0);
   Sleep(2000);
-  _Console_Write_Repeatedly(0,"                                    Born in 2020, it has no commercial character\n\n",0,0);
-  Sleep(3000);
 }
 
 

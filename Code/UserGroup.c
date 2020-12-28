@@ -1,6 +1,7 @@
 #include <direct.h>
 #include <stdio.h>
 #include <windows.h>
+#include <conio.h>
 
 #include "Declaration.h"
 
@@ -92,12 +93,12 @@ int userLogin(void) {
   _Console_Write_Frame("0:Delete  0~8:Name Value" , 2);
   _Console_Write_WriteSleep(200,"Put your user name:");
   scanf_s("%s", &userAddress.userAddress, 9);
-  getchar();
+  char stv = _getch();
 
   if (userAddress.userAddress[0] == '0') {
     _Console_Write_WriteSleep(200,"Delete your user name:");
     scanf_s("%s", &userAddress.userAddress, 9);
-    getchar();
+    char stv = _getch();
 
     if (userNameDefend(userAddress.userAddress) == 0) {
       goto reProcess;
@@ -185,7 +186,7 @@ int getProceed(void) {
   }
 
   if (userDataRead == NULL || feof(userDataRead)) {
-    _IO_File_Write(userAddress.localUserAddressData_DataFile,"w+","0011");
+    _IO_File_Write(userAddress.localUserAddressData_DataFile,"w+","0000");
   }
   fgets(userData, 5, userDataRead);
   fclose(userDataRead);

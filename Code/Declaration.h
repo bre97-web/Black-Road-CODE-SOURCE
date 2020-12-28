@@ -29,8 +29,9 @@ void EP0_NorthLight011(void);
 void pulseOn(void);
 
 // Main.c
-int getMenu(void);
-void getGamePassage(void);
+int list(int num, int mode);
+int getMenu(int num);
+int getGamePassage(int num);
 void getHelp(void);
 
 // UserGroup.c

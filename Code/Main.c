@@ -1,5 +1,6 @@
-#include "Other.Platform.vec.NonGraphic.h"
+#include "Other.Platform.C.vec.NonGraphic.h"
 #include "Declaration.h"
+#include <conio.h>
 
 int main(void) {
   system("color F0");
@@ -9,56 +10,96 @@ int main(void) {
   _Console_Write_LoadingAnimationSec();
   
   userLogin();
-  getMenu();
+  getMenu(0);
 
   _IO_File_Log(".exe end core.",1);
 
-  //  puts("\n By:Bre97 \n");
   return 0;
 }
 
-int getMenu(void) {
+int getMenu(int num) {
   system("cls");
-  _Console_Write_CutToEnd("1. Game Start\n2. Game Passage\n3. Help\n4. Back User\n5. Game Exit\n", 25, 25, 0);
+
+  _Console_Write_CutToEnd("1. Game Start\n2. Game Passage\n3. Help\n4. Back User\n5. Game Exit\n", 1, 0, 0);
   _Console_Write_Frame("Which:" , 2);
+  char arr[5][20] = {"Game Start","Game Passage","Help","Back User","Game Exit"};
+  printf("%s", arr[num]);
 
-  char strTemp[16] = "\0" , stv;
-  scanf_s("%s" , &strTemp , 16);
-  scanf_s("%c" , &stv , 1);
+  char userPuts = _getch();
+  switch (userPuts) {
+    case 119:
+      if (num != 0) {
+        num--;
+      }
+      break;
+    case 115:
+      if (num != 4) {
+        num++;
+      }
+      break;
+    case 13:
+      if (list(num, 1) == 0) {
+        return 0;
+      }
+      break;
+  }
+  getMenu(num);
+  return 0;
+}
 
-  if (strcmp(strTemp, "1") == 0) {
-    EP0_Start000();
-  } else if (strcmp(strTemp, "2") == 0) {
-    getGamePassage();
-  } else if (strcmp(strTemp, "3") == 0) {
-    getHelp();
-  } else if (strcmp(strTemp, "4") == 0) {
-    userLogin();
-  } else if (strcmp(strTemp, "5") == 0) {
-    return 1;
+int list(int num,int mode) {
+  if (mode == 1) {
+    if (num == 0) {
+      getProceed();
+    } else if (num == 1) {
+      getGamePassage(0);
+    } else if (num == 2) {
+      getHelp();
+    } else if (num == 3) {
+      userLogin();
+    } else if (num == 4) {
+      return 0;
+    }
+  } else if (mode == 2) {
+  
   }
 
-  getMenu();
+
+
   return 1;
 }
 
-void getGamePassage(void) {
+int getGamePassage(int num) {
   system("cls");
   _Console_Write_CutToEnd("GIVE_PLAYER_PASSAGE: DISPLAY\n"
-                          "1. Start[EP0_000]----------PLAYER_PASSAGE_ZERO\n"
-                          "2. NorthLight[EP0_011]----------PLAYER_PASSAGE_ONE\n"
+                          "1. Start[EP0_000]\n"
+                          "2. NorthLight[EP0_011]\n"
                           "\n"
-                          ,25,25,0);
+                          ,1,0,0);
 
-  char strTemp[32] = "\0" , stv;
-  scanf_s("%s" , &strTemp , 32);
-  scanf_s("%c", &stv, 1);
+  char arr[5][20] = { "Start[EP0_000]","NorthLight[EP0_011]","n","n","n"};
+  printf("%s", arr[num]);
 
-  if (strcmp(strTemp, "1") == 0) {
-    EP0_Start000();
-  } else if (strcmp(strTemp, "2") == 0) {
-    EP0_NorthLight011();
+  char userPuts = _getch();
+  switch (userPuts) {
+  case 119:
+    if (num != 0) {
+      num--;
+    }
+    break;
+  case 115:
+    if (num != 4) {
+      num++;
+    }
+    break;
+  case 13:
+    if (list(num, 1) == 0) {
+      return 0;
+    }
+    break;
   }
+  getGamePassage(num);
+  return 0;
 }
 
 void getHelp(void) {
@@ -68,9 +109,7 @@ void getHelp(void) {
                           "Plan to expand and support the expansion in the future.\n"
                           , 25, 25, 0);
 
-  char strTemp , stv;
-  scanf_s("%c" , &strTemp , 1);
-  scanf_s("%c", &stv, 1);
+  char stv = _getch();
 }
 
 

@@ -6,8 +6,8 @@
 #include "Declaration.h"
 
 struct Contralet {
-  char userAddress[32], localUserAddressFolder[32], localUserAddressData_DataFile[32],
-      localuserAddressData_AchievementFile[32];
+  char userAddress[32], localUserAddressFolder[64], localUserAddressData_DataFile[64],
+      localuserAddressData_AchievementFile[64];
 };
 struct Contralet userAddress;
 
@@ -22,7 +22,7 @@ struct Contralet userAddress;
  *    4:userSave/userName/achievement
  */
 void userAddrssProcess(char id[]) {
-  _Data_Convert_ArrayLinkBoth("./userSave/",id,
+  _Data_Convert_ArrayLinkBoth("./resource/data/userSave/",id,
                userAddress.localUserAddressFolder);
   _Data_Convert_ArrayLinkBoth(userAddress.localUserAddressFolder, "/data",
                userAddress.localUserAddressData_DataFile);
@@ -30,8 +30,11 @@ void userAddrssProcess(char id[]) {
                userAddress.localuserAddressData_AchievementFile);
 }
 int userAddressProcessDefend(char id[]) {
-  _IO_Folder_Create("userSave");
-  _IO_File_Create("userSave/user.txt", "a+");
+  _IO_Folder_Create("./resource");
+  _IO_Folder_Create("./resource/data");
+  _IO_Folder_Create("./resource/core");
+  _IO_Folder_Create("./resource/data/userSave");
+  _IO_File_Create("./resource/data/userSave/user.txt", "a+");
 
   if (id == 0) {
     return -1;
@@ -54,10 +57,11 @@ int userAddressProcessDefend(char id[]) {
  *  Update : FALSE - 12-24-2020
  */
 int userLogin(void) {
+  system("cls");
   userAddressProcessDefend(0);
 
   FILE *userAddressOpen = NULL;
-  fopen_s(&userAddressOpen, "userSave/user.txt", "r");
+  fopen_s(&userAddressOpen, "./resource/data/userSave/user.txt", "r");
   if (userAddressOpen == NULL) {
     return -1;
   }
@@ -75,7 +79,7 @@ int userLogin(void) {
   char userName[15][9];  
 
   if(userLocalSize == 1){
-    _Console_Write_Frame("User null",2);
+    _Console_Write_Frame("User null",2,1);
   } else {
     _Console_Write_WriteSleep(200,"User List");
     for (stTemp = 0; stTemp < userNameWidth;stTemp++) {
@@ -84,21 +88,19 @@ int userLogin(void) {
   	    numCountAdd ++;
      	}
   	  userName[stTemp][8] = '\0';
-      _Console_Write_Frame(userName[stTemp],1);
+      _Console_Write_Frame(userName[stTemp],1,1);
     }
   }  
 
   reProcess:;
 
-  _Console_Write_Frame("0:Delete  0~8:Name Value" , 2);
+  _Console_Write_Frame("0:Delete  0~8:Name Value" , 2,1);
   _Console_Write_WriteSleep(200,"Put your user name:");
   scanf_s("%s", &userAddress.userAddress, 9);
-  char stv = _getch();
 
   if (userAddress.userAddress[0] == '0') {
     _Console_Write_WriteSleep(200,"Delete your user name:");
     scanf_s("%s", &userAddress.userAddress, 9);
-    char stv = _getch();
 
     if (userNameDefend(userAddress.userAddress) == 0) {
       goto reProcess;
@@ -108,11 +110,11 @@ int userLogin(void) {
     remove(userAddress.localUserAddressData_DataFile);
     remove(userAddress.localuserAddressData_AchievementFile);
     _rmdir(userAddress.localUserAddressFolder);
-    remove("userSave/user.txt");
+    remove("./resource/data/userSave/user.txt");
 
     for (stTemp = 0;stTemp < userNameWidth;stTemp ++) {
       if (strcmp(userAddress.userAddress,userName[stTemp]) != 0) {
-        _IO_File_Write("userSave/user.txt", "a+", userName[stTemp]);
+        _IO_File_Write("./resource/data/userSave/user.txt", "a+", userName[stTemp]);
       }
     }
     userLogin();
@@ -130,13 +132,13 @@ int userLogin(void) {
     }
   }
   if (numCount != 1) {
-    _IO_File_Write("userSave/user.txt", "a+", userAddress.userAddress);
+    _IO_File_Write("./resource/data/userSave/user.txt", "a+", userAddress.userAddress);
   }
   userAddrssProcess(userAddress.userAddress);
   userAddressProcessDefend(userAddress.userAddress);
 
   _Console_Write_WriteSleep(200, "Opened user name:");
-  _Console_Write_Frame(userAddress.userAddress, 2);
+  _Console_Write_Frame(userAddress.userAddress, 2,1);
  
   return 1;
 }
@@ -184,12 +186,12 @@ int getProceed(void) {
   if (userDataRead == NULL) {
     return -1;
   }
-
-  if (userDataRead == NULL || feof(userDataRead)) {
-    _IO_File_Write(userAddress.localUserAddressData_DataFile,"w+","0000");
-  }
   fgets(userData, 5, userDataRead);
   fclose(userDataRead);
+
+  if (!feof(userDataRead)) {
+    _IO_File_Write(userAddress.localUserAddressData_DataFile, "w+", "0000");
+  }
 
   //  EP0__xxx
   if (userData[0] == '0') {

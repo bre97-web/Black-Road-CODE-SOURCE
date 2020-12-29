@@ -8,7 +8,7 @@ void _Console_Write_WriteSleep(int sleepTime, char message[]);
 void _Console_Write_Repeatedly(int sleepTime, char message[], char messageTwo[], char messageThree[]);
 void _Console_Write_CutToEnd(char message[], int startDelay, int endDelay, int whetherToEnd);
 void _Console_Write_CutToEndWithAscii(char message[], int startDelay, int endDelay);
-void _Console_Write_Frame(char log[], unsigned mode);
+void _Console_Write_Frame(char log[], unsigned int short mode, unsigned int short endFrame);
 void _Console_Write_LoadingAnimation(void);
 void _Console_Write_LoadingAnimationSec(void);
 

@@ -62,13 +62,12 @@ void _Console_Write_CutToEndWithAscii(char message[], int startDelay, int endDel
     system("cls");
   }
 }
-void _Console_Write_Frame(char log[], unsigned mode) {
+void _Console_Write_Frame(char log[], unsigned int short mode,unsigned int short endFrame) {
   size_t stTemp = 0, count = 0, logWidth = strlen(log);
 
   if (mode == 1) {
     printf("\n-----------------------------------------------\n\x20\x20");
-  }
-  else if (mode == 2) {
+  } else if (mode == 2) {
     printf("\n===============================================\n\x20\x20");
   }
 
@@ -81,11 +80,12 @@ void _Console_Write_Frame(char log[], unsigned mode) {
     }
   }
 
-  if (mode == 1) {
-    printf("\n-----------------------------------------------\n");
-  }
-  else if (mode == 2) {
-    printf("\n===============================================\n");
+  if (endFrame == 1) {
+    if (mode == 1) {
+      printf("\n-----------------------------------------------\n");
+    } else if (mode == 2) {
+      printf("\n===============================================\n");
+    }
   }
 }
 void _Console_Write_LoadingAnimation(void) {
@@ -166,7 +166,7 @@ int _IO_File_Read_State(char fileNameAddress[]) {
 }
 int _IO_File_Log(char log[] , unsigned int mode) {
   FILE *logWrite = NULL;
-  fopen_s(&logWrite, "./log", "a+");
+  fopen_s(&logWrite, "./resource/core/log.txt", "a+");
   if (logWrite == NULL) {
     return -1;
   }

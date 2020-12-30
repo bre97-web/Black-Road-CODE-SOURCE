@@ -62,30 +62,29 @@ void _Console_Write_CutToEndWithAscii(char message[], int startDelay, int endDel
     system("cls");
   }
 }
-void _Console_Write_Frame(char log[], unsigned int short mode,unsigned int short endFrame) {
-  size_t stTemp = 0, count = 0, logWidth = strlen(log);
-
-  if (mode == 1) {
-    printf("\n-----------------------------------------------\n\x20\x20");
-  } else if (mode == 2) {
-    printf("\n===============================================\n\x20\x20");
+void _Console_Write_Frame(char log[],char mark,unsigned int short endFrame) {
+  printf("\n");
+  for (int count = 0; count < 50;count ++) {
+    printf("%c",mark);
   }
+  printf("\n");
 
-  for (stTemp = 0; stTemp < logWidth; stTemp++) {
+  int logWidth = 0;
+  for (unsigned int stTemp = 0; stTemp < strlen(log); stTemp++) {
     printf("%c", log[stTemp]);
-    count++;
-    if (count == 43) {
+    logWidth ++;
+    if (logWidth == 48) {
       printf("\n\x20\x20");
-      count = 0;
+      logWidth = 0;
     }
   }
 
+  printf("\n");
   if (endFrame == 1) {
-    if (mode == 1) {
-      printf("\n-----------------------------------------------\n");
-    } else if (mode == 2) {
-      printf("\n===============================================\n");
+    for (int count = 0; count < 50; count++) {
+      printf("%c", mark);
     }
+    printf("\n");
   }
 }
 void _Console_Write_LoadingAnimation(void) {

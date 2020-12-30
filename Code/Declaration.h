@@ -8,7 +8,7 @@ void _Console_Write_WriteSleep(int sleepTime, char message[]);
 void _Console_Write_Repeatedly(int sleepTime, char message[], char messageTwo[], char messageThree[]);
 void _Console_Write_CutToEnd(char message[], int startDelay, int endDelay, int whetherToEnd);
 void _Console_Write_CutToEndWithAscii(char message[], int startDelay, int endDelay);
-void _Console_Write_Frame(char log[], unsigned int short mode, unsigned int short endFrame);
+void _Console_Write_Frame(char log[], char mark, unsigned int short endFrame);
 void _Console_Write_LoadingAnimation(void);
 void _Console_Write_LoadingAnimationSec(void);
 
@@ -25,18 +25,16 @@ int _IO_Folder_Create(char folderNameAddress[]);
 void EP0_Start000(void);
 void EP0_NorthLight011(void);
 
-// TextInformation.c
-void pulseOn(void);
-
 // Main.c
 int list(int num, int mode);
 int getMenu(int num);
 int getGamePassage(int num);
 void getHelp(void);
+void pulseOn(void);
 
 // UserGroup.c
 void userAddrssProcess(char id[]);
-int userAddressProcessDefend(char id[]);
+int systemAddressProceed(char id[]);
 int userLogin(void);
 int userNameDefend(char id[]);
 int userNameSakeDefend(char id[], char userId[]);

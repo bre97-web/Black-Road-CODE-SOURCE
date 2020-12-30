@@ -13,55 +13,16 @@ struct Contralet userAddress;
 
 
 /*
- *  Sure local file/folder life.
- *  DON'T TOUCH !!!
- *  List:
- *    1:./userSave/
- *    2:userSave/user.txt
- *    3:userSave/userName/data
- *    4:userSave/userName/achievement
- */
-void userAddrssProcess(char id[]) {
-  _Data_Convert_ArrayLinkBoth("./resource/data/userSave/",id,
-               userAddress.localUserAddressFolder);
-  _Data_Convert_ArrayLinkBoth(userAddress.localUserAddressFolder, "/data",
-               userAddress.localUserAddressData_DataFile);
-  _Data_Convert_ArrayLinkBoth(userAddress.localUserAddressFolder, "/achievement",
-               userAddress.localuserAddressData_AchievementFile);
-}
-int userAddressProcessDefend(char id[]) {
-  _IO_Folder_Create("./resource");
-  _IO_Folder_Create("./resource/data");
-  _IO_Folder_Create("./resource/core");
-  _IO_Folder_Create("./resource/data/userSave");
-  _IO_File_Create("./resource/data/userSave/user.txt", "a+");
-
-  if (id == 0) {
-    return -1;
-  }
-  _mkdir(userAddress.localUserAddressFolder);
-  _IO_File_Create(userAddress.localUserAddressData_DataFile, "a+");
-  _IO_File_Create(userAddress.localuserAddressData_AchievementFile, "a+");
-
-  _IO_File_Log(userAddress.userAddress, 2);
-  _IO_File_Log(userAddress.localUserAddressFolder, 2);
-  _IO_File_Log(userAddress.localUserAddressData_DataFile, 2);
-  _IO_File_Log(userAddress.localuserAddressData_AchievementFile, 2);
-
-  return 1;
-}
-
-/*
  *  Function : userLogin()
  *  Effect : Use placed address of user, Find new "userAddress.userAddress" , or Delete.
  *  Update : FALSE - 12-24-2020
  */
 int userLogin(void) {
   system("cls");
-  userAddressProcessDefend(0);
+  systemAddressProceed(0);
 
   FILE *userAddressOpen = NULL;
-  fopen_s(&userAddressOpen, "./resource/data/userSave/user.txt", "r");
+  fopen_s(&userAddressOpen, "./resource/data/save/user.txt", "r");
   if (userAddressOpen == NULL) {
     return -1;
   }
@@ -79,7 +40,7 @@ int userLogin(void) {
   char userName[15][9];  
 
   if(userLocalSize == 1){
-    _Console_Write_Frame("User null",2,1);
+    _Console_Write_Frame("User null",'-',1);
   } else {
     _Console_Write_WriteSleep(200,"User List");
     for (stTemp = 0; stTemp < userNameWidth;stTemp++) {
@@ -88,13 +49,13 @@ int userLogin(void) {
   	    numCountAdd ++;
      	}
   	  userName[stTemp][8] = '\0';
-      _Console_Write_Frame(userName[stTemp],1,1);
+      _Console_Write_Frame(userName[stTemp],'-',1);
     }
   }  
 
   reProcess:;
 
-  _Console_Write_Frame("0:Delete  0~8:Name Value" , 2,1);
+  _Console_Write_Frame("0:Delete  0~8:Name Value" ,'=',1);
   _Console_Write_WriteSleep(200,"Put your user name:");
   scanf_s("%s", &userAddress.userAddress, 9);
 
@@ -110,11 +71,11 @@ int userLogin(void) {
     remove(userAddress.localUserAddressData_DataFile);
     remove(userAddress.localuserAddressData_AchievementFile);
     _rmdir(userAddress.localUserAddressFolder);
-    remove("./resource/data/userSave/user.txt");
+    remove("./resource/data/save/user.txt");
 
     for (stTemp = 0;stTemp < userNameWidth;stTemp ++) {
       if (strcmp(userAddress.userAddress,userName[stTemp]) != 0) {
-        _IO_File_Write("./resource/data/userSave/user.txt", "a+", userName[stTemp]);
+        _IO_File_Write("./resource/data/save/user.txt", "a+", userName[stTemp]);
       }
     }
     userLogin();
@@ -132,13 +93,13 @@ int userLogin(void) {
     }
   }
   if (numCount != 1) {
-    _IO_File_Write("./resource/data/userSave/user.txt", "a+", userAddress.userAddress);
+    _IO_File_Write("./resource/data/save/user.txt", "a+", userAddress.userAddress);
   }
   userAddrssProcess(userAddress.userAddress);
-  userAddressProcessDefend(userAddress.userAddress);
+  systemAddressProceed(userAddress.userAddress);
 
   _Console_Write_WriteSleep(200, "Opened user name:");
-  _Console_Write_Frame(userAddress.userAddress, 2,1);
+  _Console_Write_Frame(userAddress.userAddress,'-',1);
  
   return 1;
 }
@@ -166,7 +127,54 @@ int userNameSakeDefend(char id[] , char userId[]) {
   }
   return 1;
 }
+/*
+*  Link both array
+*  DON'T TOUCH !!!
+*
+*  List:
+*    1 ./resource/data/save/id
+*    2 ./resource/data/save/id/data
+*    3 ./resource/data/save/id/achievement
+*/
+void userAddrssProcess(char id[]) {
+  _Data_Convert_ArrayLinkBoth("./resource/data/save/",id,userAddress.localUserAddressFolder);
+  _Data_Convert_ArrayLinkBoth(userAddress.localUserAddressFolder,"/data",userAddress.localUserAddressData_DataFile);
+  _Data_Convert_ArrayLinkBoth(userAddress.localUserAddressFolder,"/achievement",userAddress.localuserAddressData_AchievementFile);
+}
 
+/*
+*  Sure local file/folder life.
+*  DON'T TOUCH !!!
+*
+*  List:
+*    < Folder >
+*    1 ./resource
+*    2 ./resource/data
+*    3 ./resource/data/save
+*    4 ./resource/core
+*    *5 ./resource/data/save/id
+*    < File >
+8    1. ./resource/data/save/user.txt
+*    *2 ./resource/data/save/id/data.txt
+*    *3 ./resource/data/save/id/achievement.txt
+*/
+int systemAddressProceed(char id[]) {
+  _IO_Folder_Create("./resource");
+  _IO_Folder_Create("./resource/data");
+  _IO_Folder_Create("./resource/data/save");
+  _IO_Folder_Create("./resource/core");
+  _IO_Folder_Create("./resource/core/ptr");
+  _IO_File_Create("./resource/data/save/user.txt", "a+");
+
+  if (id == 0) {
+    return -1;
+  }
+  _IO_Folder_Create(userAddress.localUserAddressFolder);
+  _IO_File_Create(userAddress.localUserAddressData_DataFile, "a+");
+  _IO_File_Create(userAddress.localuserAddressData_AchievementFile, "a+");
+
+  return 1;
+}
 //  Write local "data".
 void sendValueToDataFile(char message[]) {
   _IO_File_Write(userAddress.localUserAddressData_DataFile, "w+", message);

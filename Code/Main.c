@@ -1,9 +1,10 @@
 #include "Other.Platform.C.vec.NonGraphic.h"
 #include "Declaration.h"
-#include <conio.h>
+#include "conio.h"
 
 int main(void) {
   system("color F0");
+
   _IO_File_Log(".exe start core.",1);
 
   pulseOn();
@@ -20,7 +21,7 @@ int main(void) {
 int getMenu(int num) {
   system("cls");
   _Console_Write_CutToEnd("1. Game Start\n2. Game Passage\n3. Help\n4. Back User\n0. Game Exit\n", 0, 0, 0);
-  _Console_Write_Frame("Which:" , 2,1 );
+  _Console_Write_Frame("Which:" ,'=',1 );
   char arr[5][20] = {"Game Start","Game Passage","Help","Back User","Game Exit"};
   printf("%s", arr[num]);
 
@@ -83,8 +84,8 @@ int getGamePassage(int num) {
                           "2. NorthLight[EP0_011]\n"
                           "0. Passage Back\n"
                           ,0,0,0);
-
-  char arr[5][20] = { "Start[EP0_000]","NorthLight[EP0_011]","n","n","n"};
+  _Console_Write_Frame("Which:", '=', 1);
+  char arr[5][20] = { "Start[EP0_000]","NorthLight[EP0_011]","Passage Back"};
   printf("%s", arr[num]);
 
   int userPuts = _getch();
@@ -115,10 +116,25 @@ void getHelp(void) {
                           "a lot of user operations have been reduced. Now you can enter 1 to indicate the first item.\n"
                           "Plan to expand and support the expansion in the future.\n"
                           , 25, 25, 0);
-  _Console_Write_Frame("Author Information:\nGoogle-mail:BY.SGATN3@Gmail.com\nOutlook-Mail:PRIVATE.BY_SGATN3.re@Outlook.com\n",1,1);
+  _Console_Write_Frame("Author Information:\nGoogle-mail:BY.SGATN3@Gmail.com\nOutlook-Mail:PRIVATE.BY_SGATN3.re@Outlook.com\n",'-',1);
 
   system("pause");
 }
 
+void pulseOn(void) {
+  system("color f0");
+  system("mode con cols=120 lines=30");
 
+  _Console_Write_Repeatedly(0, "\n\n\n\n                               ------------------------------------------------------------\n",
+    "                               |     **           **      ************       *******     |\n",
+    "                               |    ***           ***     **               **       *    |\n");
+  _Console_Write_Repeatedly(0, "                               |     ***         ***      **              **             |\n",
+    "                               |      ***       ***     *********        **              |\n",
+    "                               |       ***     ***        **             **              |\n");
+  _Console_Write_Repeatedly(0, "                               |        ***   ***         **              **             |\n",
+    "                               |         *** ***          **               **       *    |\n",
+    "                               |           ***            *************      *******     |\n");
+  _Console_Write_Repeatedly(0, "                               ------------------------------------------------------------\n", 0, 0);
+  Sleep(2000);
+}
 

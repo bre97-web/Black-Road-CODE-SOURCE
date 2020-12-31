@@ -88,7 +88,7 @@ void _Console_Write_Frame(char log[],char mark,unsigned int short titleMode) {
   }
 }
 void _Console_Write_LoadingAnimation(void) {
-  unsigned short int temp , tempTwo , count = 0;
+  signed short int temp , tempTwo , count = 0;
 
   for (temp = 0; temp < 120; temp++) {
     temp <= 40 ? system("color f8") : temp <= 80 ? system("color f4") : system("color f6");

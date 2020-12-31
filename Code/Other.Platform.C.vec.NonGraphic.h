@@ -62,7 +62,7 @@ void _Console_Write_CutToEndWithAscii(char message[], int startDelay, int endDel
     system("cls");
   }
 }
-void _Console_Write_Frame(char log[],char mark,unsigned int short endFrame) {
+void _Console_Write_Frame(char log[],char mark,unsigned int short titleMode) {
   printf("\n");
   for (int count = 0; count < 50;count ++) {
     printf("%c",mark);
@@ -80,7 +80,7 @@ void _Console_Write_Frame(char log[],char mark,unsigned int short endFrame) {
   }
 
   printf("\n");
-  if (endFrame == 1) {
+  if (titleMode == 1) {
     for (int count = 0; count < 50; count++) {
       printf("%c", mark);
     }
@@ -163,32 +163,33 @@ int _IO_File_Read_State(char fileNameAddress[]) {
     return 1;
   }
 }
-int _IO_File_Log(char log[] , unsigned int mode) {
+int _IO_File_Log(char log[] , char mark) {
   FILE *logWrite = NULL;
   fopen_s(&logWrite, "./resource/core/log.txt", "a+");
   if (logWrite == NULL) {
     return -1;
   }
-  size_t stTemp = 0 , count = 0 , logWidth = strlen(log);
-  
-  if (mode == 1) {
-   fprintf(logWrite, "\n-----------------------------------------------\n\x20\x20");
-  } else if (mode == 2) {
-   fprintf(logWrite, "\n===============================================\n\x20\x20");
+
+  for (int count = 0; count < 50; count ++) {
+    fprintf(logWrite , "%c", mark);
   }
-  for (stTemp = 0;stTemp < logWidth;stTemp ++) {
+  fprintf(logWrite , "\n");
+
+  int logWidth = 0;
+  for (unsigned int stTemp = 0;stTemp < strlen(log);stTemp ++) {
     fprintf(logWrite, "%c" , log[stTemp]);
-    count ++;
-    if (count == 43) {
+    logWidth ++;
+    if (logWidth == 48) {
       fprintf(logWrite , "\n\x20\x20");
-      count = 0;
+      logWidth = 0;
     }
   }
-  if (mode == 1) {
-   fprintf(logWrite, "\n-----------------------------------------------\n");
-  } else if (mode == 2) {
-   fprintf(logWrite, "\n===============================================\n");
+  fprintf(logWrite, "\n");
+  for (int newcount = 0; newcount < 50; newcount++) {
+    fprintf(logWrite, "%c", mark);
   }
+  fprintf(logWrite, "\n");
+
   fclose(logWrite);
   return 1;
 }

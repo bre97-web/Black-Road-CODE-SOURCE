@@ -8,7 +8,7 @@ void _Console_Write_WriteSleep(int sleepTime, char message[]);
 void _Console_Write_Repeatedly(int sleepTime, char message[], char messageTwo[], char messageThree[]);
 void _Console_Write_CutToEnd(char message[], int startDelay, int endDelay, int whetherToEnd);
 void _Console_Write_CutToEndWithAscii(char message[], int startDelay, int endDelay);
-void _Console_Write_Frame(char log[], char mark, unsigned int short endFrame);
+void _Console_Write_Frame(char log[], char mark, unsigned int short titleMode);
 void _Console_Write_LoadingAnimation(void);
 void _Console_Write_LoadingAnimationSec(void);
 
@@ -18,7 +18,7 @@ char *_Data_Convert_ArrayLinkBoth(char object[], char message[], char result[]);
 int _IO_File_Create(char fileNameAddress[], char mode[]);
 int _IO_File_Write(char fileNameAddress[], char mode[], char message[]);
 int _IO_File_Read_State(char fileNameAddress[]);
-int _IO_File_Log(char log[], unsigned int mode);
+int _IO_File_Log(char log[], char mark);
 int _IO_Folder_Create(char folderNameAddress[]);
 
 // Ep0.c

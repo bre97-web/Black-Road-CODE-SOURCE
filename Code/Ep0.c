@@ -1,7 +1,7 @@
 #include "Declaration.h"
 
 void EP0_Start000(void) {
-  _IO_File_Log("function.EP0_Start000() : start", 1);
+  _IO_File_Log("function.EP0_Start000() : start",1);
   _IO_File_Log("function.EP0_Start000() : end", 1);
 }
 

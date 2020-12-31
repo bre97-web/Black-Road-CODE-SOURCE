@@ -5,7 +5,7 @@
 int main(void) {
   system("color F0");
 
-  _IO_File_Log(".exe start core.",1);
+  _IO_File_Log(".exe start core.",'=');
 
   pulseOn();
   _Console_Write_LoadingAnimationSec();
@@ -13,7 +13,7 @@ int main(void) {
   userLogin();
   getMenu(0);
 
-  _IO_File_Log(".exe end core.",1);
+  _IO_File_Log(".exe end core.",'=');
 
   return 0;
 }
@@ -116,7 +116,9 @@ void getHelp(void) {
                           "a lot of user operations have been reduced. Now you can enter 1 to indicate the first item.\n"
                           "Plan to expand and support the expansion in the future.\n"
                           , 25, 25, 0);
-  _Console_Write_Frame("Author Information:\nGoogle-mail:BY.SGATN3@Gmail.com\nOutlook-Mail:PRIVATE.BY_SGATN3.re@Outlook.com\n",'-',1);
+  _Console_Write_Frame("Author Information:", '=' ,0);
+  _Console_Write_Frame("Google - Mail:BY.SGATN3@Gmail.com", '-', 1);
+  _Console_Write_Frame("Outlook - Mail:PRIVATE.BY_SGATN3.re@Outlook.com",'-',1);
 
   system("pause");
 }

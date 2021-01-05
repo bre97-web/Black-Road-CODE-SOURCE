@@ -4,6 +4,7 @@
 #include <conio.h>
 
 #include "Declaration.h"
+#include "Other.Platform.H.vec.Description.h"
 
 struct Contralet {
   char userAddress[32], localUserAddressFolder[64], localUserAddressData_DataFile[64],
@@ -70,7 +71,9 @@ int userLogin(void) {
     userAddrssProcess(userAddress.userAddress);
     remove(userAddress.localUserAddressData_DataFile);
     remove(userAddress.localuserAddressData_AchievementFile);
-    _rmdir(userAddress.localUserAddressFolder);
+    if (_rmdir(userAddress.localUserAddressFolder) != 0) {
+      return 0;
+    }
     remove("./resource/data/save/user.txt");
 
     for (stTemp = 0;stTemp < userNameWidth;stTemp ++) {

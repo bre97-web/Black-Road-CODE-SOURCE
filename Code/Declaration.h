@@ -4,8 +4,7 @@
 #define statement_H_INCLUDED
 
 // Ep0.c
-void EP0_Start000(void);
-void EP0_NorthLight011(void);
+int api(void);
 
 // Main.c
 int list(int num, int mode);
@@ -23,7 +22,7 @@ int userNameSakeDefend(char id[], char userId[]);
 void sendValueToDataFile(char message[]);
 int getProceed(void);
 
-int eggControlCenter();
-int newYear();
+//int eggControlCenter();
+//int newYear();
 
 #endif

@@ -212,14 +212,13 @@ int getProceed(void) {
       if (userData[2] == '0') {
         //  EP0_000
         if (userData[3] == '0') {
-          EP0_Start000();
+          api();
         
         }
       //  EP0_01x
       } else if (userData[2] == '1') {
         //  EP0_011
         if (userData[3] == '1') {
-          EP0_NorthLight011();
 
         } 
 

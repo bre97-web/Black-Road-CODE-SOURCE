@@ -4,6 +4,13 @@
 #define statement_H_INCLUDED
 
 // Ep0.c
+void directionInitialization(void);
+void directionUpdate(void);
+void diectionPrintf(void);
+int directionActiveSec(void);
+int directionActive(int a, int b);
+void fun_win();
+void operatingCenter(void);
 int api(void);
 
 // Main.c

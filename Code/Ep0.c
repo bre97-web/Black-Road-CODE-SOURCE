@@ -5,22 +5,19 @@
 # include <conio.h>
 # include <windows.h>
 
-#include "Declaration.h"
-#include "Other.Platform.H.vec.Description.h"
-
 struct direction {
   int x, y;
 }old, neww;
 char arr[11][12] = { "1#       \n","2----    \n","3--     \n","4   -----\n","5--    -\n","6----    \n","7--   -- \n","8---     \n","9---    -\n","10   ----\n","11      --\n" };
 
-void loading() {
+void directionInitialization(void) {
   old.x = 1;
   old.y = 0;
   neww.x = 1;
   neww.y = 0;
 }
 
-void fun_update() {
+void directionUpdate(void) {
   if (old.x != neww.x || old.y != neww.y) {
     arr[old.y][old.x] = ' ';
     arr[neww.y][neww.x] = '#';
@@ -29,25 +26,22 @@ void fun_update() {
   }
 }
 
-void fun_printf() {
+void diectionPrintf(void) {
   system("cls");
   for (int count = 0; count < 11; count++) {
     printf("%s\n", arr[count]);
   }
 }
 
-int fun_activeSec() {
-  if (neww.y+1 >=11) {
-    return 0;
-  }
-  if (arr[neww.y + 1][neww.x] != ' ') {
+int directionActiveSec(void) {
+  if (neww.y + 1 >= 11 || arr[neww.y + 1][neww.x] != ' ') {
     return 0;
   }
   neww.y += 1;
   return 1;
 }
 
-int fun_active(int a, int b) {
+int directionActive(int a, int b) {
   if (arr[neww.y + a][neww.x + b] != ' ') {
     return 0;
   }
@@ -66,37 +60,37 @@ void fun_win() {
 
 }
 
-void fun_gets() {
+void operatingCenter(void) {
   switch (getch()) {
   case 'w':
-    fun_active(-1, 0); fun_update(); fun_printf(); Sleep(50);
-    fun_active(-1, 0); fun_update(); fun_printf(); Sleep(50);
-    fun_active(-1, 0); fun_update(); fun_printf(); Sleep(50);
+    directionActive(-1, 0); directionUpdate(); diectionPrintf(); Sleep(50);
+    directionActive(-1, 0); directionUpdate(); diectionPrintf(); Sleep(50);
+    directionActive(-1, 0); directionUpdate(); diectionPrintf(); Sleep(50);
     break;
   case 'a':
-    fun_active(0, -1);
+    directionActive(0, -1);
     break;
   case 's':
-    fun_active(1, 0);
+    directionActive(1, 0);
     break;
   case 'd':
-    fun_active(0, 1);
+    directionActive(0, 1);
     break;
   }
-  fun_update();
-  fun_printf();
-  while (fun_activeSec()) {
+  directionUpdate();
+  diectionPrintf();
+  while (directionActiveSec()) {
     Sleep(250);
-    fun_update();
-    fun_printf();
+    directionUpdate();
+    diectionPrintf();
   }
   fun_win();
 }
 
 int api(void) {
-  loading();
-  fun_printf();
+  directionInitialization();
+  diectionPrintf();
   while (1) {
-    fun_gets();
+    operatingCenter();
   }
 }

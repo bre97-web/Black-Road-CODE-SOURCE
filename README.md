@@ -9,5 +9,5 @@
   3. Start  
     Start up "ShadowOfWorld-Console.exe" , you may look one "cmd" window.     
 + NEW  
-| C -> C# Building | Update Times |  
-|        0 %       |  12-21-2020  |  
++ Light  
+  Alpha.x -> Beta.x -> Production.x

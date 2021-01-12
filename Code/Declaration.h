@@ -4,14 +4,15 @@
 #define statement_H_INCLUDED
 
 // Ep0.c
-void directionInitialization(void);
+void directionInitialization(unsigned int x, unsigned int y);
 void directionUpdate(void);
 void diectionPrintf(void);
 int directionActiveSec(void);
 int directionActive(int a, int b);
-void fun_win();
+int attack();
+int attackSec();
 void operatingCenter(void);
-int api(void);
+int Ep0(void);
 
 // Main.c
 int list(int num, int mode);

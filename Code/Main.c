@@ -70,32 +70,19 @@ int list(int num, int mode) {
         case 3:
           userLogin();
           break;
+        case 4:
+          return 0;
+          break;
+      }
+    case 2:
+      switch (num) {
+        case 0:
+          Ep0();
+          break;
+        case 4:
+          return 0;
       }
   }
-
-  if (mode == 1) {
-    if (num == 0) {
-      getProceed();
-    } else if (num == 1) {
-      getGamePassage(0);
-    } else if (num == 2) {
-      getHelp();
-    } else if (num == 3) {
-      userLogin();
-    } else if (num == 4) {
-      return 0;
-    }
-
-  } else if (mode == 2) {
-    if (num == 0) {
-      Ep0();
-    } else if (num == 1) {
-
-    } else if (num == 2) {
-      return 0;
-    }
-  }
-
   return 1;
 }
 
@@ -110,8 +97,7 @@ int getGamePassage(int num) {
   char arr[5][20] = {"Start[EP0_000]", "NorthLight[EP0_011]", "Passage Back"};
   printf("%s", arr[num]);
 
-  int userPuts = _getch();
-  switch (userPuts) {
+  switch (_getch()) {
     case 119:
       if (num != 0) {
         num--;
@@ -150,8 +136,7 @@ void pulseOn(void) {
   system("color f0");
   system("mode con cols=120 lines=30");
 
-  _Console_Write_Repeatedly(
-      0,
+  _Console_Write_Repeatedly(0,
       "\n\n\n\n                               "
       "------------------------------------------------------------\n",
       "                               |     **           **      "

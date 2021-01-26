@@ -12,7 +12,6 @@ struct Contralet {
 };
 struct Contralet userAddress;
 
-
 /*
  *  Function : userLogin()
  *  Effect : Use placed address of user, Find new "userAddress.userAddress" , or Delete.
@@ -28,36 +27,31 @@ int userLogin(void) {
     return -1;
   }
   
-  size_t userLocalSize = 0;
-  char userLocal[64];
+  char userName[32][9];
+  int userLocalSize = 0;
   while(!feof(userAddressOpen)){
-    userLocal[userLocalSize] = (char)fgetc(userAddressOpen);
+    for (int count = 0; count < 8;count ++) {
+      userName[userLocalSize][count] = (char)fgetc(userAddressOpen);
+    }
+    userName[userLocalSize][8] = '\0';
     userLocalSize ++;
   }
-  userLocal[userLocalSize] = '\0';
+  int userNameWidth = userLocalSize - 1;
   fclose(userAddressOpen);
-
-  size_t userNameWidth = strlen(userLocal) / 8 , stTemp = 0 , numCount = 0 , numCountAdd = 0;
-  char userName[15][9];  
 
   if(userLocalSize == 1){
     _Console_Write_Frame("User null",'-',1);
   } else {
     _Console_Write_WriteSleep(200,"User List");
-    for (stTemp = 0; stTemp < userNameWidth;stTemp++) {
-      for (numCount = 0;numCount < 8;numCount ++) {
-  	    userName[stTemp][numCount] = userLocal[numCountAdd];
-  	    numCountAdd ++;
-     	}
-  	  userName[stTemp][8] = '\0';
+    for (int stTemp = 0; stTemp < userNameWidth;stTemp++) {
       _Console_Write_Frame(userName[stTemp],'-',1);
     }
-  }  
-
-  reProcess:;
+  } 
 
   _Console_Write_Frame("0:Delete  0~8:Name Value" ,'=',1);
   _Console_Write_WriteSleep(200,"Put your user name:");
+
+  reProcess:;
   scanf_s("%s", &userAddress.userAddress, 9);
 
   if (userAddress.userAddress[0] == '0') {
@@ -76,9 +70,9 @@ int userLogin(void) {
     }
     remove("./resource/data/save/user.txt");
 
-    for (stTemp = 0;stTemp < userNameWidth;stTemp ++) {
-      if (strcmp(userAddress.userAddress,userName[stTemp]) != 0) {
-        _IO_File_Write("./resource/data/save/user.txt", "a+", userName[stTemp]);
+    for (int count = 0;count < userNameWidth;count ++) {
+      if (strcmp(userAddress.userAddress,userName[count]) != 0) {
+        _IO_File_Write("./resource/data/save/user.txt", "a+", userName[count]);
       }
     }
     userLogin();
@@ -88,9 +82,9 @@ int userLogin(void) {
   if (userNameDefend(userAddress.userAddress) == 0){
     goto reProcess; 
   }
-  numCount = 0;
-  for (stTemp = 0; stTemp < userNameWidth;stTemp++) {
-    if (userNameSakeDefend(userAddress.userAddress,userName[stTemp]) == 0) {
+  int numCount = 0;
+  for (int count = 0; count < userNameWidth;count++) {
+    if (userNameSakeDefend(userAddress.userAddress,userName[count]) == 0) {
       numCount = 1;
       break;
     }
@@ -111,13 +105,12 @@ int userLogin(void) {
  *  user name sake :123456789(1~9) and 8bit
  */
 int userNameDefend(char id[]) {
-  size_t stTemp = 0;
   if (id[7] == 0 || id[8] != 0) {
     puts("8bit number");
     return 0;
   }
-  for (stTemp = 0; stTemp < 8; stTemp++) {
-    if (id[stTemp] < 48 || id[stTemp] > 57) {
+  for (int count = 0; count < 8; count++) {
+    if (id[count] < 48 || id[count] > 57) {
       puts("8bit number 0~9");
       return 0;
     }
@@ -155,11 +148,13 @@ void userAddrssProcess(char id[]) {
 *    2 ./resource/data
 *    3 ./resource/data/save
 *    4 ./resource/core
-*    *5 ./resource/data/save/id
+*    5 ./resource/core/ptr
+*    *6 ./resource/data/save/id
 *    < File >
 8    1. ./resource/data/save/user.txt
 *    *2 ./resource/data/save/id/data.txt
 *    *3 ./resource/data/save/id/achievement.txt
+*    *4 ./resource/core/ptr/ptr.txt
 */
 int systemAddressProceed(char id[]) {
   _IO_Folder_Create("./resource");

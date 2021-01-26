@@ -7,8 +7,8 @@
 void directionValueInitialization(unsigned int x, unsigned int y);
 void directionValueUpdate(void);
 void diectionPrintf(void);
-int directionControlCenterSec(void);
 int directionControlCenter(int a, int b);
+void fun();
 int manualAttack();
 int manualAttackSec();
 void operatingCenter(void);

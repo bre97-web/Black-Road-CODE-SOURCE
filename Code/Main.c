@@ -1,5 +1,6 @@
 #include "Declaration.h"
 #include "Other.Platform.H.vec.Description.h"
+#include "Error.h"
 
 #include <conio.h>
 #include <Windows.h>
@@ -32,8 +33,7 @@ int getMenu(int num) {
                      "Game Exit"};
   printf("%s", arr[num]);
 
-  int userPuts = _getch();
-  switch (userPuts) {
+  switch (_getch()) {
     case 119:
       if (num != 0) {
         num--;
@@ -46,44 +46,33 @@ int getMenu(int num) {
       break;
     case 13:
       if (list(num, 1) == 0) {
-        return 0;
+        return REPORT_ACTIVE_FALSE;
       }
       break;
   }
   getMenu(num);
-  return 0;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
 int list(int num, int mode) {
   switch (mode) {
     case 1:
       switch (num) {
-        case 0:
-          getProceed();
-          break;
-        case 1:
-          getGamePassage(0);
-          break;
-        case 2:
-          getHelp();
-          break;
-        case 3:
-          userLogin();
-          break;
-        case 4:
-          return 0;
-          break;
+        case 0:getProceed();break;
+        case 1:getGamePassage(0);break;
+        case 2:getHelp();break;
+        case 3:userLogin();break;
+        case 4:return REPORT_ACTIVE_FALSE;break;
       }
+      break;
     case 2:
       switch (num) {
-        case 0:
-          Ep0();
-          break;
-        case 4:
-          return 0;
+        case 0:game("00");break;
+        case 3:return REPORT_ACTIVE_FALSE;break;
       }
+      break;
   }
-  return 1;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
 int getGamePassage(int num) {
@@ -110,24 +99,23 @@ int getGamePassage(int num) {
       break;
     case 13:
       if (list(num, 2) == 0) {
-        return 0;
+        return REPORT_ACTIVE_FALSE;
       }
       break;
   }
   getGamePassage(num);
-  return 0;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
 void getHelp(void) {
   system("cls");
   _Console_Write_CutToEnd(25, 25, 0,
-      "In the v0.1 alpha.2 version.\n"
-      "a lot of user operations have been reduced. Now you can enter 1 to "
-      "indicate the first item.\n"
-      "Plan to expand and support the expansion in the future.\n");
+    "In version 0.1-Alpha.1c.\n\n"
+    "Regarding the operation of the main interface : \n    W S is the option switch key.\n"
+    "Regarding the operation of the game : \n    A D(S) is the parallel displacement Key, and SPACE Key + A W D is the special displacement Key.\n    At any time in the game, -Key to disconnect the game, = Key to have no effect.\n\n");
   _Console_Write_Frame("Author Information:", '=',0);
   _Console_Write_Frame("Google - Mail:BY.SGATN3@Gmail.com", '-',0);
-  _Console_Write_Frame("Outlook - Mail:PRIVATE.BY_SGATN3.re@Outlook.com", '-',0);
+  _Console_Write_Frame("Outlook - Mail:PRIVATE.BY_SGATN3.re@Outlook.com", '-',1);
 
   system("pause");
 }

@@ -5,6 +5,7 @@
 
 #include "Declaration.h"
 #include "Other.Platform.H.vec.Description.h"
+#include "Error.h"
 
 struct Contralet {
   char userAddress[32], localUserAddressFolder[64], localUserAddressData_DataFile[64],
@@ -24,7 +25,7 @@ int userLogin(void) {
   FILE *userAddressOpen = NULL;
   fopen_s(&userAddressOpen, "./resource/data/save/user.txt", "r");
   if (userAddressOpen == NULL) {
-    return -1;
+    return REPORT_ERROR_USER_FILE_OPEN;
   }
   
   char userName[32][9];
@@ -40,16 +41,16 @@ int userLogin(void) {
   fclose(userAddressOpen);
 
   if(userLocalSize == 1){
-    _Console_Write_Frame("User null",'-',1);
+    _Console_Write_Frame("User null\n",'-',1);
   } else {
-    _Console_Write_WriteSleep(200,"User List");
+    _Console_Write_WriteSleep(200,"User List\n");
     for (int stTemp = 0; stTemp < userNameWidth;stTemp++) {
       _Console_Write_Frame(userName[stTemp],'-',1);
     }
   } 
 
   _Console_Write_Frame("0:Delete  0~8:Name Value" ,'=',1);
-  _Console_Write_WriteSleep(200,"Put your user name:");
+  _Console_Write_WriteSleep(200,"Put your user name:\n");
 
   reProcess:;
   scanf_s("%s", &userAddress.userAddress, 9);
@@ -66,7 +67,7 @@ int userLogin(void) {
     remove(userAddress.localUserAddressData_DataFile);
     remove(userAddress.localuserAddressData_AchievementFile);
     if (_rmdir(userAddress.localUserAddressFolder) != 0) {
-      return 0;
+      return REPORT_ERROR_USER_FILE_DELETE;
     }
     remove("./resource/data/save/user.txt");
 
@@ -76,7 +77,7 @@ int userLogin(void) {
       }
     }
     userLogin();
-    return 1;
+    return REPORT_ACTIVE_FUNCTION_END;
   }
 
   if (userNameDefend(userAddress.userAddress) == 0){
@@ -98,7 +99,7 @@ int userLogin(void) {
   _Console_Write_WriteSleep(200, "Opened user name:");
   _Console_Write_Frame(userAddress.userAddress,'-',1);
  
-  return 1;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
 /*
@@ -107,21 +108,21 @@ int userLogin(void) {
 int userNameDefend(char id[]) {
   if (id[7] == 0 || id[8] != 0) {
     puts("8bit number");
-    return 0;
+    return REPORT_ACTIVE_FALSE;
   }
   for (int count = 0; count < 8; count++) {
     if (id[count] < 48 || id[count] > 57) {
       puts("8bit number 0~9");
-      return 0;
+      return REPORT_ACTIVE_FALSE;
     }
   }
-  return 1;
+  return REPORT_ACTIVE_FUNCTION_END;
 } 
 int userNameSakeDefend(char id[] , char userId[]) {
   if (strcmp(id,userId) == 0) {
-    return 0;
+    return REPORT_ACTIVE_FALSE;
   }
-  return 1;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 /*
 *  Link both array
@@ -165,13 +166,13 @@ int systemAddressProceed(char id[]) {
   _IO_File_Create("./resource/data/save/user.txt", "a+");
 
   if (id == 0) {
-    return -1;
+    return REPORT_ACTIVE_FUNCTION_END;
   }
   _IO_Folder_Create(userAddress.localUserAddressFolder);
   _IO_File_Create(userAddress.localUserAddressData_DataFile, "a+");
   _IO_File_Create(userAddress.localuserAddressData_AchievementFile, "a+");
 
-  return 1;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 //  Write local "data".
 void sendValueToDataFile(char message[]) {
@@ -184,49 +185,24 @@ void sendValueToDataFile(char message[]) {
  *  Update : TRUE
  */
 int getProceed(void) {
-  char userData[5];
+  char userData[3];
 
   //  Read local "data" file
   FILE *userDataRead = NULL;
   fopen_s(&userDataRead, userAddress.localUserAddressData_DataFile, "r");
   if (userDataRead == NULL) {
-    return -1;
+    return REPORT_ERROR_USER_FILE_OPEN;
   }
-  fgets(userData, 5, userDataRead);
-  fclose(userDataRead);
-
   if (!feof(userDataRead)) {
     _IO_File_Write(userAddress.localUserAddressData_DataFile, "w+", "0000");
   }
+  fgets(userData, 3, userDataRead);
+  fclose(userDataRead);
 
-  //  EP0__xxx
-  if (userData[0] == '0') {
-    //  EP0_0xx
-    if (userData[1] == '0') {
-      //  EP0_00x
-      if (userData[2] == '0') {
-        //  EP0_000
-        if (userData[3] == '0') {
-          Ep0();
-        
-        }
-      //  EP0_01x
-      } else if (userData[2] == '1') {
-        //  EP0_011
-        if (userData[3] == '1') {
-
-        } 
-
-      }
-    } else if (userData[1] == '1') {
-    } else if (userData[1] == '2') {
-    }
-  } else if (userData[0] == '1') {
-  }
+  game(userData);
 
 
-
-  return 1;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
 

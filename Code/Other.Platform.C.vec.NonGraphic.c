@@ -61,7 +61,6 @@ void _Console_Write_CutToEndWithAscii( int startDelay, int endDelay, char messag
   }
 }
 void _Console_Write_Frame(char log[],char mark,unsigned int short titleMode) {
-  printf("\n");
   for (int count = 0; count < 50;count ++) {
     printf("%c",mark);
   }

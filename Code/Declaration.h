@@ -4,6 +4,7 @@
 #define statement_H_INCLUDED
 
 // Ep0.c
+int ptr(char fileNameAddress[]);
 void directionValueInitialization(unsigned int x, unsigned int y);
 void directionValueUpdate(void);
 void diectionPrintf(void);
@@ -11,8 +12,8 @@ int directionControlCenter(int a, int b);
 void fun();
 int manualAttack();
 int manualAttackSec();
-void operatingCenter(void);
-int Ep0(void);
+int operatingCenter(void);
+int game(char numID[2]);
 
 // Main.c
 int list(int num, int mode);

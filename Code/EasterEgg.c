@@ -1,6 +1,17 @@
 #include <stdio.h>
 #include "Declaration.h"
 
+
+
+
+
+
+
+
+
+
+
+
 /*
 int eggControlCenter() {
   newYear();

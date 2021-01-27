@@ -1,5 +1,6 @@
 #include "Declaration.h"
 #include "Other.Platform.H.vec.Description.h"
+#include "Error.h"
 
 # include <stdio.h>
 # include <conio.h>
@@ -10,21 +11,22 @@ struct direction {
 }old, neww;
 struct active {
   int life, operation;
+  int sys;
 }set;
 
 char worldArr[30][61];
 
-int ptr() {
+int ptr(char fileNameAddress[]) {
   FILE *ptrAddress = NULL;
-  fopen_s(&ptrAddress,"./resource/core/ptr/ptr.txt","r");
+  fopen_s(&ptrAddress,fileNameAddress,"r");
   if (ptrAddress == NULL) {
-    return -1;
+    return REPORT_ERROR_USER_FILE_OPEN;
   }
 
   int width = 0;
   while (!feof(ptrAddress)) {
     if (width == 30) {
-      return 0;
+      return REPORT_ACTIVE_FUNCTION_END;
     }
     for (int count = 0; count < 60;count ++) {
       worldArr[width][count] = (char)fgetc(ptrAddress);
@@ -32,7 +34,7 @@ int ptr() {
     worldArr[width][60] = '\0';
     width++;
   }
-  return 0;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
 //  struct direction : old.x & old.y & neww.x & neww.y
@@ -65,23 +67,23 @@ void diectionPrintf(void) {
 
 int directionControlCenter(int a, int b) {
   if (a == 0 && b == 0) {
-    return 0;
+    return REPORT_ACTIVE_FALSE;
   }
   if (neww.y + 1 >= (int)sizeof(worldArr) || worldArr[neww.y + a][neww.x + b] != ' ') {
-    return 0;
+    return REPORT_ACTIVE_FALSE;
   }
   neww.y += a;
   neww.x += b;
-  return 1;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
-void operatingCenter(void) {
+int operatingCenter(void) {
   int valueOne = 0 , valueTwo = 0 , control = 0 , jump = 0;
   
   switch (getch()) {
     //  Attack
     case 'e':manualAttack();break;
-    //  Move £º Foot
+    //  Move : Foot
     case 'a':valueTwo = -1;break;
     case 'd':valueTwo = 1;break; 
     case 'w':valueOne = -1;control = 3;break;
@@ -91,11 +93,12 @@ void operatingCenter(void) {
         case 'a':valueOne = -1;valueTwo = -1;break;
         case 'd':valueOne = -1;valueTwo = 1;break;
         case 'w':valueOne = 0;jump = 1;break;
-        default:
-          break;
       }
       control = 3;
       break;
+    //  Ability
+    case '-':set.sys = 0;return REPORT_ACTIVE_FALSE;break;
+    case '=':set.sys = -1;return REPORT_ACTIVE_FALSE;break;
   }
   int count = 0;
 
@@ -115,6 +118,8 @@ void operatingCenter(void) {
     Sleep(25);
     diectionPrintf();
   } while (directionControlCenter(1, 0));
+
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
 void fun() {
@@ -140,24 +145,40 @@ int manualAttack() {
   if (worldArr[neww.y][neww.x - 1] == '!' || worldArr[neww.y][neww.x + 1] == '!') {
     worldArr[neww.y][neww.x - 1] = ' ';
     worldArr[neww.y][neww.x + 1] = ' ';
-    return 1;
+    return REPORT_ACTIVE_FALSE;
   }
-  return 0;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 int manualAttackSec() {
   if (worldArr[neww.y + 1][neww.x] == '!') {
     neww.y += 1;
-    return 1;
+    return REPORT_ACTIVE_FALSE;
   }
-  return 0;
+  return REPORT_ACTIVE_FUNCTION_END;
 }
 
-int Ep0(void) {
-  ptr();
+int game(char numID[2]) {
+  
+  switch(numID[0]) {
+    case '0':
+      switch(numID[1]){
+        case '0':ptr("./resource/core/ptr/ptr00.txt");break;
+        case '1':ptr("./resource/core/ptr/ptr01.txt");break;
+      }
+
+  }
+  
   directionValueInitialization(0,0);
   diectionPrintf();
-  while (1) {
-    operatingCenter();
-    
+  sendValueToDataFile(numID);
+
+  while (operatingCenter()) {
   }
+
+  if (set.sys == -1) {
+    numID[1] ++;
+    game(numID);
+  }
+
+  return REPORT_ACTIVE_FUNCTION_END;
 }

@@ -6,7 +6,7 @@
   For the experience of new features, please use [New Repository](https://github.com/bre97-web/ShadowOfWorld-CSharp).  
   
   * For all future feature updates, [New Repository](https://github.com/bre97-web/ShadowOfWorld-CSharp) will be the main target.  
-  > All the new single-batch functions are updated to this repository after a 1~4 week delay after the [New Repository](https://github.com/bre97-web/ShadowOfWorld-CSharp) is updated.  
+    > All the new single-batch functions are updated to this repository after a 1~4 week delay after the [New Repository](https://github.com/bre97-web/ShadowOfWorld-CSharp) is updated.  
   
   * The function of the two repositories is not synchronized.  
     > Minor differences in this repository will be ignored (e.g. text that appears on the console).  

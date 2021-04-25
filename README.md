@@ -1,6 +1,6 @@
 # Shadow Of World ver.C  
 + #Update Log.#  
-  The new C# Project is already online ： 12/21/2020  
+  The new C# Project is already online! 
     
 + #NEW.#  
   The new features of this repository will be postponed to update soon.  

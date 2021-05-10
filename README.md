@@ -24,4 +24,6 @@
         Have a project life cycle of up to 10 years (create this repository, maintain this repository, terminate this repository).  
 
     
-
++ ## License
+  This [License](https://github.com/bre97-web/ShadowOfWorld-C/blob/main/LICENSE) is Completely open.
+  

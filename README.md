@@ -1,6 +1,7 @@
 # Shadow Of World ver.C  
 + ## Update Logs.  
-  The new C# Project is already online!  
+  The new C# Project is already online!
+  Added a code license agreement!  
   
 + ## News.  
   The new features of this repository will be postponed to update soon.  
@@ -23,7 +24,6 @@
         Has a 365-day version life cycle (Alpha version, Beta version, official version).  
         Have a project life cycle of up to 10 years (create this repository, maintain this repository, terminate this repository).  
 
-    
-+ ## License
-  This [License](https://github.com/bre97-web/ShadowOfWorld-C/blob/main/LICENSE) is Completely open.
++ ## License  
+  This [License](https://github.com/bre97-web/ShadowOfWorld-C/blob/main/LICENSE) is Completely open.  
   

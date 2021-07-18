@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h>
+#include <stdbool.h>
 
 #include "Declaration.h"
 #include "Other.Platform.H.vec.Description.h"
-#include "Error.h"
+#include "Report.h"
 
 struct Contralet {
   char userAddress[32], localUserAddressFolder[64], localUserAddressData_DataFile[64],
@@ -59,20 +60,20 @@ int userLogin(void) {
     _Console_Write_WriteSleep(200,"Delete your user name:");
     scanf_s("%s", &userAddress.userAddress, 9);
 
-    if (userNameDefend(userAddress.userAddress) == 0) {
+    if (userNameDefend(userAddress.userAddress) == FALSE) {
       goto reProcess;
     }
 
     userAddrssProcess(userAddress.userAddress);
     remove(userAddress.localUserAddressData_DataFile);
     remove(userAddress.localuserAddressData_AchievementFile);
-    if (_rmdir(userAddress.localUserAddressFolder) != 0) {
+    if (_rmdir(userAddress.localUserAddressFolder) != FALSE) {
       return REPORT_ERROR_USER_FILE_DELETE;
     }
     remove("./resource/data/save/user.txt");
 
     for (int count = 0;count < userNameWidth;count ++) {
-      if (strcmp(userAddress.userAddress,userName[count]) != 0) {
+      if (strcmp(userAddress.userAddress,userName[count]) != FALSE) {
         _IO_File_Write("./resource/data/save/user.txt", "a+", userName[count]);
       }
     }
@@ -80,23 +81,23 @@ int userLogin(void) {
     return REPORT_ACTIVE_FUNCTION_END;
   }
 
-  if (userNameDefend(userAddress.userAddress) == 0){
+  if (userNameDefend(userAddress.userAddress) == FALSE){
     goto reProcess; 
   }
-  int numCount = 0;
+  bool activity = FALSE;
   for (int count = 0; count < userNameWidth;count++) {
-    if (userNameSakeDefend(userAddress.userAddress,userName[count]) == 0) {
-      numCount = 1;
+    if (userNameSakeDefend(userAddress.userAddress,userName[count]) == FALSE) {
+      activity = TRUE;
       break;
     }
   }
-  if (numCount != 1) {
+  if (activity != TRUE) {
     _IO_File_Write("./resource/data/save/user.txt", "a+", userAddress.userAddress);
   }
   userAddrssProcess(userAddress.userAddress);
   systemAddressProceed(userAddress.userAddress);
 
-  _Console_Write_WriteSleep(200, "Opened user name:");
+  _Console_Write_WriteSleep(200, "Opened user name:"); 
   _Console_Write_Frame(userAddress.userAddress,'-',1);
  
   return REPORT_ACTIVE_FUNCTION_END;

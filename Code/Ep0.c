@@ -1,10 +1,11 @@
 #include "Declaration.h"
 #include "Other.Platform.H.vec.Description.h"
-#include "Error.h"
+#include "Report.h"
 
 # include <stdio.h>
 # include <conio.h>
 # include <windows.h>
+# include <stdbool.h>
 
 struct direction {
   int x, y;
@@ -26,6 +27,7 @@ int ptr(char fileNameAddress[]) {
   int width = 0;
   while (!feof(ptrAddress)) {
     if (width == 30) {
+      fclose(ptrAddress);
       return REPORT_ACTIVE_FUNCTION_END;
     }
     for (int count = 0; count < 60;count ++) {
@@ -34,6 +36,7 @@ int ptr(char fileNameAddress[]) {
     worldArr[width][60] = '\0';
     width++;
   }
+  fclose(ptrAddress);
   return REPORT_ACTIVE_FUNCTION_END;
 }
 
@@ -57,7 +60,7 @@ void directionValueUpdate(void) {
 
 void diectionPrintf(void) {
   system("cls");
-  for (int count = 0; count < 29; count++) {
+  for (int count = 0; count < 30; count++) {
     printf("%s\n", worldArr[count]);
   }
   printf("LIFE : %d  |  OPERATION : %d" , set.life,set.operation);
@@ -78,7 +81,8 @@ int directionControlCenter(int a, int b) {
 }
 
 int operatingCenter(void) {
-  int valueOne = 0 , valueTwo = 0 , control = 0 , jump = 0;
+  int valueOne = 0, valueTwo = 0, control = 0;
+  bool jump = FALSE;
   
   switch (getch()) {
     //  Attack
@@ -92,19 +96,21 @@ int operatingCenter(void) {
       switch (getch()) {
         case 'a':valueOne = -1;valueTwo = -1;break;
         case 'd':valueOne = -1;valueTwo = 1;break;
-        case 'w':valueOne = 0;jump = 1;break;
+        case 'w':valueOne = 0;jump = TRUE;break;
       }
       control = 3;
       break;
     //  Ability
     case '-':set.sys = 0;return REPORT_ACTIVE_FALSE;break;
     case '=':set.sys = -1;return REPORT_ACTIVE_FALSE;break;
+    default:return REPORT_ACTIVE_FUNCTION_END;break;
   }
   int count = 0;
 
-  if (jump == 1) {
+  if (jump == TRUE) {
     fun();
   }
+
   do {
     directionControlCenter(valueOne , valueTwo);
     directionValueUpdate();

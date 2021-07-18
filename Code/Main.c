@@ -1,110 +1,145 @@
 #include "Declaration.h"
 #include "Other.Platform.H.vec.Description.h"
-#include "Error.h"
+#include "Platform.Rmdust.Error.h"
 
 #include <conio.h>
 #include <Windows.h>
 #include <stdio.h>
+#include <stdbool.h>
+
+
 
 int main(void) {
-  system("color F0");
 
-  _IO_File_Log(".exe start core.", '=');
+  Rmdust_Reset();
 
-  //eggControlCenter();
+  Rmdust_System_Log_SetTitle("Start Core");
+  Rmdust_System_Log_SetTitleAddons("Non");
+  Rmdust_System_Log_SetLableLevel(2);
+  Rmdust_System_Log_SetLogActive(TRUE);
+  Rmdust_System_IO_Error_Log_Write();
 
-  pulseOn();
-  _Console_Write_LoadingAnimationSec();
+  //userLogin();
 
-  userLogin();
-  getMenu(0);
+  char arr[][16] = { "Game Start", "Game Passage", "Help", "Back User","Game Exit","\0" };
+  Menu(0,arr,TRUE);
 
-  _IO_File_Log(".exe end core.", '=');
 
   return 0;
 }
 
-int getMenu(int num) {
-  system("cls");
-  _Console_Write_CutToEnd(0, 0, 0,
-      "1. Game Start\n2. Game Passage\n3. Help\n4. Back User\n0. Game Exit\n");
-  _Console_Write_Frame("Which:", '=', 1);
-  char arr[5][20] = {"Game Start", "Game Passage", "Help", "Back User",
-                     "Game Exit"};
-  printf("%s", arr[num]);
 
-  switch (_getch()) {
-    case 119:
-      if (num != 0) {
-        num--;
-      }
-      break;
-    case 115:
-      if (num != 4) {
-        num++;
-      }
-      break;
-    case 13:
-      if (list(num, 1) == 0) {
-        return REPORT_ACTIVE_FALSE;
-      }
-      break;
+
+
+
+int Menu(int Position, char MenuList[][16],bool Reset) {
+  // 初次使用 Menu() 时 Position 应为 0 
+  // 当 num 为 < 0 时终止 Menu() 及菜单响应中心 
+  if (Position < 0) {
+    return 0;
   }
-  getMenu(num);
-  return REPORT_ACTIVE_FUNCTION_END;
+
+  // Get size for MenuList the min and max
+  if (Reset) {
+    for (int OutIndex = 0; 1; OutIndex += 1) {
+      SetMenuListMax(OutIndex - 1);
+
+      if (MenuList[OutIndex][0] == '\0') {
+        break;
+      }
+
+      for (int InIndex = 0; 1; InIndex += 1) {
+        if (MenuList[OutIndex][InIndex] == '\0') {
+          break;
+        }
+      }
+    }
+  }
+
+  system("cls");
+
+  for (int in = 0; in < GetMenuListMax();in += 1) {
+    printf("%s\n",MenuList[in]);
+  }
+  printf("%s\n",MenuList[Position]);
+
+
+  Menu(__MenuOperate(1, Position, 0, GetMenuListMax()),MenuList,FALSE);
+
+  return 0;
 }
 
-int list(int num, int mode) {
-  switch (mode) {
+static struct System {
+  struct SystemMenu {
+    int Line;
+    int Vertical;
+  } Menu;
+
+
+} System;
+
+inline void SetMenuListMax(int Number) {
+  System.Menu.Line = Number;
+}
+
+inline int GetMenuListMax() {
+  return System.Menu.Line;
+}
+
+
+
+// 操作菜单选项,只有这个函数才能调用菜单响应中心 
+inline int __MenuOperate(int mode, int num, int Min, int Max) {
+  switch (getch()) {
+  case 119:
+    if (num != Min) {
+      num--;
+    }
+    break;
+  case 115:
+    if (num != Max) {
+      num++;
+    }
+    break;
+  case 13:
+    if (__MenuList(mode, num) == -1) {
+      return -1;
+    }
+    break;
+  }
+
+  return num;
+}
+
+// 所有菜单的超级响应中心 
+inline int __MenuList(int Mode, int OperationType) {
+
+  switch (Mode) {
+    
+      
+    // Main-Menu
     case 1:
-      switch (num) {
-        case 0:getProceed();break;
-        case 1:getGamePassage(0);break;
-        case 2:getHelp();break;
-        case 3:userLogin();break;
-        case 4:return REPORT_ACTIVE_FALSE;break;
-      }
-      break;
-    case 2:
-      switch (num) {
-        case 0:game("00");break;
-        case 3:return REPORT_ACTIVE_FALSE;break;
-      }
-      break;
-  }
-  return REPORT_ACTIVE_FUNCTION_END;
-}
-
-int getGamePassage(int num) {
-  system("cls");
-  _Console_Write_CutToEnd(0, 0, 0,
-      "GIVE_PLAYER_PASSAGE: DISPLAY\n"
-      "1. Start[EP0_000]\n"
-      "2. NorthLight[EP0_011]\n"
-      "0. Passage Back\n");
-  _Console_Write_Frame("Which:", '=', 1);
-  char arr[5][20] = {"Start[EP0_000]", "NorthLight[EP0_011]", "Passage Back"};
-  printf("%s", arr[num]);
-
-  switch (_getch()) {
-    case 119:
-      if (num != 0) {
-        num--;
-      }
-      break;
-    case 115:
-      if (num != 4) {
-        num++;
-      }
-      break;
-    case 13:
-      if (list(num, 2) == 0) {
-        return REPORT_ACTIVE_FALSE;
+      switch (OperationType) {
+        case 0:
+          getProceed();
+          break;
+        case 1:
+          //getGamePassage(0);
+          break;
+        case 2:
+          getHelp();
+          break;
+        case 3:
+          userLogin();
+          break;
+        case 4:
+          return -1;
+          break;
       }
       break;
   }
-  getGamePassage(num);
-  return REPORT_ACTIVE_FUNCTION_END;
+
+  return 1;
 }
 
 void getHelp(void) {
@@ -118,37 +153,4 @@ void getHelp(void) {
   _Console_Write_Frame("Outlook - Mail:PRIVATE.BY_SGATN3.re@Outlook.com", '-',1);
 
   system("pause");
-}
-
-void pulseOn(void) {
-  system("color f0");
-  system("mode con cols=120 lines=30");
-
-  _Console_Write_Repeatedly(0,
-      "\n\n\n\n                               "
-      "------------------------------------------------------------\n",
-      "                               |     **           **      "
-      "************       *******     |\n",
-      "                               |    ***           ***     **          "
-      "     **       *    |\n");
-  _Console_Write_Repeatedly(0,
-                            "                               |     ***        "
-                            " ***      **              **             |\n",
-                            "                               |      ***       "
-                            "***     *********        **              |\n",
-                            "                               |       ***     "
-                            "***        **             **              |\n");
-  _Console_Write_Repeatedly(0,
-                            "                               |        ***   "
-                            "***         **              **             |\n",
-                            "                               |         *** "
-                            "***          **               **       *    |\n",
-                            "                               |           ***  "
-                            "          *************      *******     |\n");
-  _Console_Write_Repeatedly(
-      0,
-      "                               "
-      "------------------------------------------------------------\n",
-      0, 0);
-  Sleep(2000);
 }
